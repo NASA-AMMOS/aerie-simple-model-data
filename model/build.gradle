@@ -20,7 +20,7 @@ jar {
 }
 
 repositories {
-  //flatDir { dirs "$rootDir/third-party" }
+  flatDir { dirs "$rootDir/third-party" }
   mavenCentral()
   maven {
       name = "GitHubPackages"
