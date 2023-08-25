@@ -1,4 +1,4 @@
-package gov.nasa.jpl.aerie-data;
+package gov.nasa.jpl.aerie_data;
 
 import java.util.Map;
 

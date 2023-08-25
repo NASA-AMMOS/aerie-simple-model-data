@@ -1,4 +1,4 @@
-package gov.nasa.jpl.aerie-data;
+package gov.nasa.jpl.aerie_data;
 
 import gov.nasa.jpl.aerie.contrib.models.Accumulator;
 import gov.nasa.jpl.aerie.merlin.framework.resources.real.RealResource;

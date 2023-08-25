@@ -1,5 +1,5 @@
 plugins {
-  id 'java'
+  id 'java-library'
 }
 
 java {
@@ -8,22 +8,28 @@ java {
   }
 }
 
-def exportedProjects = [
-        ":model",
-        ":demo"
-]
+// The runtime environment this JAR will be deployed to doesn't know what this model depends on.
+// So the generated JAR must include its dependencies. (Except `merlin-sdk`, which is marked `compileTimeApi` by
+// `merlin-framework`, so that the runtime system and model JAR can agree on the same interfaces.)
+jar {
+  from {
+    configurations.runtimeClasspath.filter{ it.exists() }.collect{ it.isDirectory() ? it : zipTree(it) }
+  } {
+    exclude 'META-INF/LICENSE.txt', 'META-INF/LICENSE', 'META-INF/NOTICE.txt', 'META-INF/NOTICE', 'META-INF/versions/11/module-info.class', 'META-INF/versions/**/*.class'
+  }
+}
 
 repositories {
   flatDir { dirs "$rootDir/third-party" }
   mavenCentral()
   maven {
-      name = "GitHubPackages"
-      url = "https://maven.pkg.github.com/nasa-ammos/aerie"
-        credentials {
-          username = System.getenv('GITHUB_USER')
-          password = System.getenv('GITHUB_TOKEN')
-        }
+    name = "GitHubPackages"
+    url = "https://maven.pkg.github.com/nasa-ammos/aerie"
+    credentials {
+      username = System.getenv('GITHUB_USER')
+      password = System.getenv('GITHUB_TOKEN')
     }
+  }
 }
 
 tasks.named('test') {
@@ -35,7 +41,7 @@ dependencies {
   implementation 'gov.nasa.jpl.aerie:contrib:+'
   implementation 'gov.nasa.jpl.aerie:merlin-framework:+'
   implementation 'gov.nasa.jpl.aerie:merlin-sdk:+'
-  compileOnly 'gov.nasa.jpl.aerie:merlin-driver:+'
+  implementation 'gov.nasa.jpl.aerie:merlin-driver:+'
   implementation 'gov.nasa.jpl.aerie:parsing-utilities:+'
   //implementation 'gov.nasa.jpl.aerie:scheduler-driver:+'
   implementation 'com.google.guava:guava:29.0-jre'
