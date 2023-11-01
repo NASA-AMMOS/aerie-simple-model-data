@@ -37,6 +37,7 @@ tasks.named('test') {
 }
 
 dependencies {
+  implementation project(path: ':model')
   annotationProcessor 'gov.nasa.jpl.aerie:merlin-framework-processor:+'
   implementation 'gov.nasa.jpl.aerie:contrib:+'
   implementation 'gov.nasa.jpl.aerie:merlin-framework:+'
