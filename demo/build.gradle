@@ -39,7 +39,7 @@ tasks.named('test') {
 dependencies {
   implementation project(path: ':model')
   annotationProcessor 'gov.nasa.jpl.aerie:merlin-framework-processor:+'
-  implementation 'gov.nasa.jpl.aerie:contrib:+'
+  //implementation 'gov.nasa.jpl.aerie:contrib:+'
   implementation 'gov.nasa.jpl.aerie:merlin-framework:+'
   implementation 'gov.nasa.jpl.aerie:merlin-sdk:+'
   compileOnly 'gov.nasa.jpl.aerie:merlin-driver:+'
@@ -54,4 +54,7 @@ dependencies {
   testImplementation 'com.google.truth:truth:1.0.1'
   testImplementation 'com.google.truth.extensions:truth-java8-extension:1.0.1'
   testImplementation 'com.google.guava:guava-testlib:29.0-jre'
+
+  implementation files("/resources/contrib.jar")
+  testImplementation files("/resources/contrib.jar")
 }
