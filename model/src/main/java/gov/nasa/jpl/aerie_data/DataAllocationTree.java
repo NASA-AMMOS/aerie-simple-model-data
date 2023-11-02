@@ -1,14 +1,22 @@
 package gov.nasa.jpl.aerie_data;
 
+import gov.nasa.jpl.aerie.contrib.models.Accumulator;
+import gov.nasa.jpl.aerie.merlin.framework.ModelActions;
 import gov.nasa.jpl.aerie.merlin.framework.resources.real.RealResource;
 import gov.nasa.jpl.aerie.merlin.protocol.types.Duration;
 
 import java.util.Map;
 
 public class DataAllocationTree implements DataAllocation, DataCollectionTree {
-    @Override
+
+  public String name;
+  public DataAllocationTree(String name) {
+    this.name = name;
+  }
+
+  @Override
     public RealResource allocatedVolume() {
-        return null;
+        return allocatedVolume;
     }
 
     @Override
@@ -18,17 +26,20 @@ public class DataAllocationTree implements DataAllocation, DataCollectionTree {
 
     @Override
     public String name() {
-        return null;
+        return name();
     }
 
     @Override
     public RealResource dataSize() {
-        return null;
+        return allocatedVolume;
     }
 
     @Override
     public void add(long bits, Duration duration) {
-
+      double rate = bits/(Math.min(1.0, duration.in(Duration.MICROSECONDS)/1E6));
+      ((Accumulator)allocatedVolume).rate.add(rate);
+      ModelActions.delay(duration);
+      ((Accumulator)allocatedVolume).rate.add(-rate);
     }
 
     @Override

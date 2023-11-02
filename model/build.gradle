@@ -13,10 +13,12 @@ java {
 // `merlin-framework`, so that the runtime system and model JAR can agree on the same interfaces.)
 jar {
   from {
-    configurations.runtimeClasspath.filter{ it.exists() }.collect{ it.isDirectory() ? it : zipTree(it) }
+    //from sourceSets.main.output // Include your project's classes and resources
+//    configurations.runtimeClasspath.filter{ it.exists() }.collect{ it.isDirectory() ? it : zipTree(it) }
   } {
     exclude 'META-INF/LICENSE.txt', 'META-INF/LICENSE', 'META-INF/NOTICE.txt', 'META-INF/NOTICE', 'META-INF/versions/11/module-info.class', 'META-INF/versions/**/*.class'
   }
+  duplicatesStrategy(DuplicatesStrategy.WARN)
 }
 
 repositories {
@@ -54,6 +56,8 @@ dependencies {
   testImplementation 'com.google.truth.extensions:truth-java8-extension:1.0.1'
   testImplementation 'com.google.guava:guava-testlib:29.0-jre'
 
-  implementation files("../demo/src/main/resources/contrib.jar")
-  testImplementation files("../demo/src/main/resources/contrib.jar")
+//  implementation files("${project.rootDir.path}/demo/src/main/resources/contrib.jar")
+//  testImplementation files("${project.rootDir.path}/demo/src/main/resources/contrib.jar")
+  implementation files("../model/src/main/resources/contrib.jar")
+  testImplementation files("../model/src/main/resources/contrib.jar")
 }

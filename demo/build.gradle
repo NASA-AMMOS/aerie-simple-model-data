@@ -14,10 +14,17 @@ java {
 jar {
   from {
     configurations.runtimeClasspath.filter{ it.exists() }.collect{ it.isDirectory() ? it : zipTree(it) }
+//    from project(':model').jar
+    //configurations.runtimeClasspath.collect{ it.isDirectory() ? it : zipTree(it) }
   } {
     exclude 'META-INF/LICENSE.txt', 'META-INF/LICENSE', 'META-INF/NOTICE.txt', 'META-INF/NOTICE', 'META-INF/versions/11/module-info.class', 'META-INF/versions/**/*.class'
   }
+  duplicatesStrategy(DuplicatesStrategy.WARN)
+  //println(project(':model').tasks)
+  //dependsOn project(':model').tasks.jar
 }
+
+//jar.dependsOn project(':model').tasks.assemble
 
 repositories {
   flatDir { dirs "$rootDir/third-party" }
@@ -37,7 +44,6 @@ tasks.named('test') {
 }
 
 dependencies {
-  implementation project(path: ':model')
   annotationProcessor 'gov.nasa.jpl.aerie:merlin-framework-processor:+'
   //implementation 'gov.nasa.jpl.aerie:contrib:+'
   implementation 'gov.nasa.jpl.aerie:merlin-framework:+'
@@ -55,6 +61,17 @@ dependencies {
   testImplementation 'com.google.truth.extensions:truth-java8-extension:1.0.1'
   testImplementation 'com.google.guava:guava-testlib:29.0-jre'
 
-  implementation files("/resources/contrib.jar")
-  testImplementation files("/resources/contrib.jar")
+//  implementation files("${project.rootDir.path}/demo/src/main/resources/contrib.jar")
+//  testImplementation files("${project.rootDir.path}/demo/src/main/resources/contrib.jar")
+  implementation files("../demo/src/main/resources/contrib.jar")
+  testImplementation files("../demo/src/main/resources/contrib.jar")
+
+  // api project(":model")
+//  implementation project(path: ':model')
+  implementation project(':model')
+  testImplementation project(':model')
+  implementation files("../model/build/libs/model.jar")
+  testImplementation files("../model/build/libs/model.jar")
+
+  //jar.dependsOn project(':model').tasks.assemble
 }
