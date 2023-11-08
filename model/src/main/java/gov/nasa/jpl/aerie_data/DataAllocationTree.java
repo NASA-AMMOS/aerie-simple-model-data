@@ -26,7 +26,7 @@ public class DataAllocationTree implements DataAllocation, DataCollectionTree {
 
     @Override
     public String name() {
-        return name();
+        return name;
     }
 
     @Override
