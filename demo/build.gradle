@@ -5,53 +5,19 @@
 jar {
   from {
     configurations.runtimeClasspath.filter{ it.exists() }.collect{ it.isDirectory() ? it : zipTree(it) }
-//    from project(':model').jar
-    //configurations.runtimeClasspath.collect{ it.isDirectory() ? it : zipTree(it) }
   } {
     exclude 'META-INF/LICENSE.txt', 'META-INF/LICENSE', 'META-INF/NOTICE.txt', 'META-INF/NOTICE', 'META-INF/versions/11/module-info.class', 'META-INF/versions/**/*.class'
   }
   duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
-  //println(project(':model').tasks)
-  //dependsOn project(':model').tasks.jar
 }
-
-//jar.dependsOn project(':model').tasks.assemble
 
 tasks.named('test') {
   useJUnitPlatform()
 }
 
 dependencies {
-//  annotationProcessor 'gov.nasa.jpl.aerie:merlin-framework-processor:+'
-//  //implementation 'gov.nasa.jpl.aerie:contrib:+'
-//  implementation 'gov.nasa.jpl.aerie:merlin-framework:+'
-//  implementation 'gov.nasa.jpl.aerie:merlin-sdk:+'
-//  compileOnly 'gov.nasa.jpl.aerie:merlin-driver:+'
-//  implementation 'gov.nasa.jpl.aerie:parsing-utilities:+'
-//  //implementation 'gov.nasa.jpl.aerie:scheduler-driver:+'
-//  implementation 'com.google.guava:guava:29.0-jre'
-//  implementation 'com.google.code.gson:gson:2.8.7'
-//  implementation 'com.google.mug:mug:5.3'
-//  implementation 'org.apache.commons:commons-csv:1.9.0'
-//  testImplementation 'gov.nasa.jpl.aerie:merlin-framework-junit:+'
-//  testImplementation 'org.junit.jupiter:junit-jupiter:+'
-//  testImplementation 'com.google.truth:truth:1.0.1'
-//  testImplementation 'com.google.truth.extensions:truth-java8-extension:1.0.1'
-//  testImplementation 'com.google.guava:guava-testlib:29.0-jre'
-//
-////  implementation files("${project.rootDir.path}/demo/src/main/resources/contrib.jar")
-////  testImplementation files("${project.rootDir.path}/demo/src/main/resources/contrib.jar")
-//  implementation files("../demo/src/main/resources/contrib.jar")
-//  testImplementation files("../demo/src/main/resources/contrib.jar")
-//  implementation files("../libs/contrib.jar")
-//  testImplementation files("../libs/contrib.jar")
-
-  // api project(":model")
-//  implementation project(path: ':model')
   implementation project(':model')
   testImplementation project(':model')
   implementation files("../model/build/libs/model.jar")
   testImplementation files("../model/build/libs/model.jar")
-
-  //jar.dependsOn project(':model').tasks.assemble
 }
