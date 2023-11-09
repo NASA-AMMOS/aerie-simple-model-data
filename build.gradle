@@ -1,0 +1,49 @@
+
+allprojects {
+  repositories {
+    flatDir { dirs "$rootDir/third-party" }
+    mavenCentral()
+    maven {
+      name = "GitHubPackages"
+      url = "https://maven.pkg.github.com/nasa-ammos/aerie"
+      credentials {
+        username = System.getenv('GITHUB_USER')
+        password = System.getenv('GITHUB_TOKEN')
+      }
+    }
+  }
+}
+
+subprojects {
+
+  apply plugin: 'java'
+
+  java {
+    toolchain {
+      languageVersion = JavaLanguageVersion.of(19)
+    }
+  }
+
+  dependencies {
+    annotationProcessor 'gov.nasa.jpl.aerie:merlin-framework-processor:+'
+    //implementation 'gov.nasa.jpl.aerie:contrib:+'
+    implementation 'gov.nasa.jpl.aerie:merlin-framework:+'
+    implementation 'gov.nasa.jpl.aerie:merlin-sdk:+'
+    compileOnly 'gov.nasa.jpl.aerie:merlin-driver:+'
+    implementation 'gov.nasa.jpl.aerie:parsing-utilities:+'
+    //implementation 'gov.nasa.jpl.aerie:scheduler-driver:+'
+    implementation 'com.google.guava:guava:29.0-jre'
+    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'com.google.mug:mug:5.3'
+    implementation 'org.apache.commons:commons-csv:1.9.0'
+    implementation 'org.apache.commons:commons-math3:3.6.1'
+    testImplementation 'gov.nasa.jpl.aerie:merlin-framework-junit:+'
+    testImplementation 'org.junit.jupiter:junit-jupiter:+'
+    testImplementation 'com.google.truth:truth:1.0.1'
+    testImplementation 'com.google.truth.extensions:truth-java8-extension:1.0.1'
+    testImplementation 'com.google.guava:guava-testlib:29.0-jre'
+
+    implementation files("${project.rootDir.path}/libs/contrib.jar")
+    testImplementation files("${project.rootDir.path}/libs/contrib.jar")
+  }
+}
