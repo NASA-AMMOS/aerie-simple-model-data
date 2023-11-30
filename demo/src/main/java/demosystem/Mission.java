@@ -9,6 +9,7 @@ import gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomial;
 import gov.nasa.jpl.aerie.merlin.framework.ModelActions;
 import gov.nasa.jpl.aerie.merlin.framework.Registrar;
 import gov.nasa.jpl.aerie_data.DataAllocationTree;
+import gov.nasa.jpl.aerie_data.Bucket;
 
 import static gov.nasa.jpl.aerie.contrib.streamline.core.monads.ResourceMonad.map;
 import static gov.nasa.jpl.aerie.contrib.streamline.modeling.linear.Linear.linear;
@@ -20,14 +21,16 @@ public class Mission {
 
   public CellResource<Polynomial> linearRes =  cellResource(polynomial(0));
 
+  public Bucket bucket = Bucket("test");
+
   public Mission(final Registrar registrar, final Configuration config) {
     //CellResource<Polynomial> linearRes = cellResource(polynomial());
     //registrar.discrete("area", area, new DoubleValueMappper());
     var registrarStreamlined = new gov.nasa.jpl.aerie.contrib.streamline.modeling.Registrar(registrar);
     registrarStreamlined.real("linearRes", linearize(linearRes));
 
-    DataAllocationTree dat = new DataAllocationTree("data volume");
-    registrar.real(dat.name(), dat.allocatedVolume());
+    // DataAllocationTree dat = new DataAllocationTree("data volume");
+    // registrar.real(dat.name(), dat.allocatedVolume());
   }
 
   private static Resource<Linear> linearize(Resource<Polynomial> p) {

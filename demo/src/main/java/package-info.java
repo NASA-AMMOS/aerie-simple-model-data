@@ -3,6 +3,7 @@
 @MissionModel.WithConfiguration(Configuration.class)
 
 @MissionModel.WithActivityType(RandomActOfViolence.class)
+@MissionModel.WithActivityType(ChangeVolume.class)
 
 package demosystem;
 
