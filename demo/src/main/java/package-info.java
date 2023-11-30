@@ -7,7 +7,7 @@
 
 package demosystem;
 
-import demosystem.activities.RandomActOfViolence;
+import demosystem.activities.*;
 import gov.nasa.jpl.aerie.contrib.serialization.rulesets.BasicValueMappers;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.MissionModel;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.MissionModel.WithActivityType;

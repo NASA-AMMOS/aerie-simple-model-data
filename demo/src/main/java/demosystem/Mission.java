@@ -21,16 +21,16 @@ public class Mission {
 
   public CellResource<Polynomial> linearRes =  cellResource(polynomial(0));
 
-  public Bucket bucket = Bucket("test");
+  public Bucket onboard = new Bucket("onboard");
+  public Bucket ground = new Bucket("ground");
 
   public Mission(final Registrar registrar, final Configuration config) {
     //CellResource<Polynomial> linearRes = cellResource(polynomial());
     //registrar.discrete("area", area, new DoubleValueMappper());
     var registrarStreamlined = new gov.nasa.jpl.aerie.contrib.streamline.modeling.Registrar(registrar);
     registrarStreamlined.real("linearRes", linearize(linearRes));
-
-    // DataAllocationTree dat = new DataAllocationTree("data volume");
-    // registrar.real(dat.name(), dat.allocatedVolume());
+    registrarStreamlined.real("volume", linearize(onboard.volume()));
+    registrarStreamlined.real("volume", linearize(ground.volume()));
   }
 
   private static Resource<Linear> linearize(Resource<Polynomial> p) {

@@ -1,6 +1,7 @@
-package gov.nasa.jpl.srl.aerie.common.models.data;
+package gov.nasa.jpl.aerie_data;
 
 import com.google.common.collect.Table;
+import gov.nasa.jpl.aerie.contrib.models.Accumulator;
 import gov.nasa.jpl.aerie.contrib.streamline.core.*;
 import gov.nasa.jpl.aerie.contrib.streamline.core.monads.ResourceMonad;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.discrete.Discrete;
@@ -27,9 +28,9 @@ import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomi
 
 
 public class Bucket {
-    
+
     String name;
-    Resource<Polynomial> volume;
+    CellResource<Polynomial> volume;
     CellResource<Polynomial> rate;
 
 
@@ -43,16 +44,16 @@ public class Bucket {
         return name;
     }
 
-    public Resource<Polynomial> volume() {
+    public CellResource<Polynomial> volume() {
         return volume;
     }
 
-    public void changeVolume(Double newVolume) {
-        this.volume = CellResource.cellResource(Polynomial.polynomial(newVolume));
+    public void changeVolume(double newVolume) {
+        CellResource.set(this.volume, Polynomial.polynomial(newVolume));
     }
 
     public void changeRate(double newRate) {
-        this.rate = CellResource.cellResource(Polynomial.polynomial(newRate));
+        CellResource.set(this.rate, Polynomial.polynomial(newRate));
     }
 
     // public void registerStates(Registrar registrar) {
