@@ -28,9 +28,9 @@ public class Mission {
     //CellResource<Polynomial> linearRes = cellResource(polynomial());
     //registrar.discrete("area", area, new DoubleValueMappper());
     var registrarStreamlined = new gov.nasa.jpl.aerie.contrib.streamline.modeling.Registrar(registrar);
-    registrarStreamlined.real("linearRes", linearize(linearRes));
-    registrarStreamlined.real("volume", linearize(onboard.volume()));
-    registrarStreamlined.real("volume", linearize(ground.volume()));
+    //registrarStreamlined.real("linearRes", linearize(linearRes));
+    registrarStreamlined.real("onboard volume", linearize(onboard.volume()));
+    registrarStreamlined.real("ground volume", linearize(ground.volume()));
   }
 
   private static Resource<Linear> linearize(Resource<Polynomial> p) {

@@ -4,6 +4,10 @@
 
 @MissionModel.WithActivityType(RandomActOfViolence.class)
 @MissionModel.WithActivityType(ChangeVolume.class)
+@MissionModel.WithActivityType(AddData.class)
+@MissionModel.WithActivityType(ChangeRate.class)
+@MissionModel.WithActivityType(DeleteData.class)
+@MissionModel.WithActivityType(Telecom.class)
 
 package demosystem;
 

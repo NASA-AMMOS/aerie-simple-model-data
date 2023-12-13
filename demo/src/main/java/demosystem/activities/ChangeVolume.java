@@ -1,5 +1,6 @@
 package demosystem.activities;
 
+import demosystem.Buckets;
 import demosystem.Mission;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.ActivityType;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.ActivityType.EffectModel;
@@ -12,10 +13,12 @@ import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomi
 @ActivityType("ChangeVolume")
 public class ChangeVolume {
     @Parameter public double newVolume = 0.0;
-    @Parameter Bucket bucket;
+  @Parameter
+  public Buckets bucket = Buckets.onboard;
 
     @EffectModel
     public void run(Mission model) {
-        bucket.changeVolume(newVolume);
+      Bucket b = bucket == Buckets.ground ? model.ground : model.onboard;
+      b.changeVolume(newVolume);
     }
 }

@@ -21,6 +21,5 @@ public class Telecom {
   @EffectModel
   public void run(Mission model) {
     CellResource<Polynomial> maxVolume = model.onboard.volume();
-
   }
 }
