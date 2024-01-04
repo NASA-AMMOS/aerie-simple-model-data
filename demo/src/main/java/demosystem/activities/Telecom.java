@@ -1,5 +1,6 @@
 package demosystem.activities;
 
+import demosystem.Buckets;
 import demosystem.Mission;
 import gov.nasa.jpl.aerie.contrib.streamline.core.CellResource;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomial;
@@ -16,10 +17,11 @@ import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomi
 @ActivityType("Telecom")
 public class Telecom {
   @Parameter public Duration duration;
-  @Parameter public double rate;
+  @Parameter public double bits;
 
   @EffectModel
   public void run(Mission model) {
-    CellResource<Polynomial> maxVolume = model.onboard.volume();
+    model.ground.addVolume(bits, duration);
+    model.onboard.deleteVolume(bits, duration);
   }
 }

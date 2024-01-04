@@ -56,6 +56,17 @@ public class Bucket {
         CellResource.set(this.rate, Polynomial.polynomial(newRate));
     }
 
+    public void addVolume(double bits, Duration duration) {
+        PolynomialEffects.consume(this.volume, bits*-1, duration);
+//        delay(duration);
+    }
+
+    public void deleteVolume(double bits, Duration duration) {
+        PolynomialEffects.consume(this.volume, bits, duration);
+
+//        delay(duration);
+    }
+
     // public void registerStates(Registrar registrar) {
     //     registrar.real("volume", linearize(volume));
     //     registrar.clearTrace();
