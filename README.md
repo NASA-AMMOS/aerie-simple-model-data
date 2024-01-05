@@ -5,9 +5,9 @@ This repository provides a simple, configurable spacecraft data management model
 
 ## Quick Start
 
-Interested in giving the data model a quick spin? We've pre-built a very simple example spacecraft model, demosystem, that uses the data model. This model has a few activities in it that add and transfer data. To try out this model, simply load [demosystem.jar](demosystem.jar) into Aerie. If you have never used Aerie before and need some help getting it deployed and uploading a model, start [here](https://nasa-ammos.github.io/aerie-docs/introduction/#fast-track).
+Interested in giving the data model a quick spin? We've pre-built a very simple example spacecraft model, demosystem, that uses the data model. This model has a few activities in it that add and transfer data. To try out this model, simply load [demo.jar](demo.jar) into Aerie. If you have never used Aerie before and need some help getting it deployed and uploading a model, start [here](https://nasa-ammos.github.io/aerie-docs/introduction/#fast-track).
 
-Once you have loaded [demosystem.jar](demosystem.jar) into Aerie, make a plan with a time range of your choosing (a plan length of a day should be reasonable). Once you have created a plan, add a couple of activities to it and hit the simulate button. Once the simulation completes you should see a green check appear next to the Simulation icon, and viola, you have successfully run the data model!
+Once you have loaded [demo.jar](demo.jar) into Aerie, make a plan with a time range of your choosing (a plan length of a day should be reasonable). Once you have created a plan, add a couple of activities to it and hit the simulate button. Once the simulation completes you should see a green check appear next to the Simulation icon, and viola, you have successfully run the data model!
 
 To actually see the results of the simulation you ran, you can load a pre-built [basic data model view](DataModelBasicView.json) that will place a number of different resources on to the timeline for named buckets of data.
 
@@ -50,7 +50,7 @@ The following instructions assume that you are using MacOS, but the instructions
 
 ## Building
 
-To build the mission model JAR file in the `demo/build/libs` sub-directory of the repository directory and the data model jar in the `model/build/libs` ub-irectory, you can type in this command in the directory of the repository:
+To build the mission model JAR file in the `demo/build/libs` sub-directory of the repository directory and the data model jar in the `model/build/libs` sub-directory, you can type in this command in the directory of the repository:
 
 ```sh
 ./gradlew build --refresh-dependencies
