@@ -59,7 +59,7 @@ To build the mission model JAR file in the `demo/build/libs` sub-directory of th
 You can deploy Aerie on your local machine by first opening Docker Desktop, and then you can start the Aerie services using the following command in the directory of the repository:
 
 ```sh
-docker compose up
+docker compose up -d
 ```
 
 You can then upload the JAR to Aerie using either the [UI](http://localhost/) or API.
