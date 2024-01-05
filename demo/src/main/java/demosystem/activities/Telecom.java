@@ -2,8 +2,10 @@ package demosystem.activities;
 
 import demosystem.Buckets;
 import demosystem.Mission;
+import demosystem.generated.ActivityActions;
 import gov.nasa.jpl.aerie.contrib.streamline.core.CellResource;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomial;
+import gov.nasa.jpl.aerie.merlin.framework.ModelActions;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.ActivityType;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.ActivityType.EffectModel;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.Export.Parameter;
@@ -17,11 +19,22 @@ import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomi
 @ActivityType("Telecom")
 public class Telecom {
   @Parameter public Duration duration;
+
   @Parameter public double bits;
+
+
+  public Telecom(Duration duration, double bits) {
+    this.duration = duration;
+    this.bits = bits;
+  }
+
+  public Telecom(){}
 
   @EffectModel
   public void run(Mission model) {
-    model.ground.addVolume(bits, duration);
-    model.onboard.deleteVolume(bits, duration);
+    //model.ground.addVolume(bits, duration);
+    ActivityActions.call(model, new AddData(bits, duration, Buckets.ground));
+    ActivityActions.delay(duration);
+    ActivityActions.call(model, new DeleteData(bits, duration, Buckets.onboard));
   }
 }

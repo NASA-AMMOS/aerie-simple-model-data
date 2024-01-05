@@ -14,9 +14,17 @@ import gov.nasa.jpl.aerie_data.Bucket;
 
 @ActivityType("AddData")
 public class AddData {
-  @Parameter public double bits;
-  @Parameter public Duration duration;
+  @Parameter public double bits = 1000;
+  @Parameter public Duration duration = Duration.HOUR;
   @Parameter public Buckets bucket = Buckets.onboard;
+
+  public AddData(double bits, Duration duration, Buckets bucket) {
+    this.bits = bits;
+    this.duration = duration;
+    this.bucket = bucket;
+  }
+
+  public AddData(){}
 
   @EffectModel
   public void run(Mission model) {

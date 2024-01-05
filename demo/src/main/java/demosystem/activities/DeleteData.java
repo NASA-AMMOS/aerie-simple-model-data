@@ -13,12 +13,18 @@ import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomi
 
 @ActivityType("DeleteData")
 public class DeleteData {
-  @Parameter public double bits;
-  @Parameter public Duration duration;
+  @Parameter public double bits = 1000;
+  @Parameter public Duration duration = Duration.HOUR;
   @Parameter
   public Buckets bucket = Buckets.onboard;
 
+  public DeleteData(double bits, Duration duration, Buckets bucket) {
+    this.bits = bits;
+    this.duration = duration;
+    this.bucket = bucket;
+  }
 
+  public DeleteData(){}
 
   @EffectModel
   public void run(Mission model) {

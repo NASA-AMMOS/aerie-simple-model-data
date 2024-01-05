@@ -3,6 +3,7 @@ package gov.nasa.jpl.aerie_data;
 import com.google.common.collect.Table;
 import gov.nasa.jpl.aerie.contrib.models.Accumulator;
 import gov.nasa.jpl.aerie.contrib.streamline.core.*;
+import gov.nasa.jpl.aerie.contrib.streamline.core.monads.DynamicsMonad;
 import gov.nasa.jpl.aerie.contrib.streamline.core.monads.ResourceMonad;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.discrete.Discrete;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.discrete.monads.DiscreteResourceMonad;
@@ -31,13 +32,11 @@ public class Bucket {
 
     String name;
     CellResource<Polynomial> volume;
-    CellResource<Polynomial> rate;
 
 
     public Bucket(String name) {
         this.name = name;
         volume = CellResource.cellResource(Polynomial.polynomial(0));
-        rate = CellResource.cellResource(Polynomial.polynomial(0));
     }
 
     public String name() {
@@ -48,23 +47,27 @@ public class Bucket {
         return volume;
     }
 
-    public void changeVolume(double newVolume) {
-        CellResource.set(this.volume, Polynomial.polynomial(newVolume));
+    public void changeVolume(double new_volume) {
+      this.volume.emit(DynamicsMonad.effect(($) -> {
+        Double old_volume = $.extract();
+        return $.add(Polynomial.polynomial(new double[]{new_volume - old_volume}));
+      }));
     }
 
     public void changeRate(double newRate) {
-        CellResource.set(this.rate, Polynomial.polynomial(newRate));
+      this.volume.emit(DynamicsMonad.effect(($) -> {
+        Double old_rate = $.derivative().extract();
+        Double change_in_rate = newRate - old_rate;
+        return $.add(Polynomial.polynomial(new double[]{0.0, change_in_rate}));
+      }));
     }
 
     public void addVolume(double bits, Duration duration) {
-        PolynomialEffects.consume(this.volume, bits*-1, duration);
-//        delay(duration);
+        PolynomialEffects.restore(this.volume, bits, duration);
     }
 
     public void deleteVolume(double bits, Duration duration) {
         PolynomialEffects.consume(this.volume, bits, duration);
-
-//        delay(duration);
     }
 
     // public void registerStates(Registrar registrar) {

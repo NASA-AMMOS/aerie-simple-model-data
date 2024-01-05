@@ -4,6 +4,7 @@ package demosystem;
 import gov.nasa.jpl.aerie.contrib.models.Accumulator;
 import gov.nasa.jpl.aerie.contrib.streamline.core.CellResource;
 import gov.nasa.jpl.aerie.contrib.streamline.core.Resource;
+import gov.nasa.jpl.aerie.contrib.streamline.core.Resources;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.linear.Linear;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomial;
 import gov.nasa.jpl.aerie.merlin.framework.ModelActions;
@@ -25,6 +26,7 @@ public class Mission {
   public Bucket ground = new Bucket("ground");
 
   public Mission(final Registrar registrar, final Configuration config) {
+    Resources.init();
     //CellResource<Polynomial> linearRes = cellResource(polynomial());
     //registrar.discrete("area", area, new DoubleValueMappper());
     var registrarStreamlined = new gov.nasa.jpl.aerie.contrib.streamline.modeling.Registrar(registrar);
