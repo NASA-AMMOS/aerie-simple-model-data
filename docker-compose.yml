@@ -18,7 +18,7 @@ services:
       POSTGRES_PASSWORD: aerie
       POSTGRES_PORT: 5432
       POSTGRES_USER: aerie
-    image: "ghcr.io/nasa-ammos/aerie-gateway:v1.12.0"
+    image: "ghcr.io/nasa-ammos/aerie-gateway:v2.2.0"
     ports: ["9000:9000"]
     restart: always
     volumes:
@@ -38,7 +38,7 @@ services:
       MERLIN_LOCAL_STORE: /usr/src/app/merlin_file_store
       MERLIN_PORT: 27183
       UNTRUE_PLAN_START: "2000-01-01T11:58:55.816Z"
-    image: "ghcr.io/nasa-ammos/aerie-merlin:v1.12.0"
+    image: "ghcr.io/nasa-ammos/aerie-merlin:v2.2.0"
     ports: ["27183:27183"]
     restart: always
     volumes:
@@ -48,8 +48,10 @@ services:
     depends_on: ["postgres", "aerie_merlin"]
     environment:
       JAVA_OPTS: >
-        -Dorg.slf4j.simpleLogger.log.com.zaxxer.hikari=WARN
-        -Dorg.slf4j.simpleLogger.logFile=System.err
+        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+        -Dorg.slf4j.simpleLogger.defaultLogLevel=DEBUG
+#        -Dorg.slf4j.simpleLogger.log.com.zaxxer.hikari=WARN
+#        -Dorg.slf4j.simpleLogger.logFile=System.err
       MERLIN_WORKER_DB: "aerie_merlin"
       MERLIN_WORKER_DB_PASSWORD: aerie
       MERLIN_WORKER_DB_PORT: 5432
@@ -58,10 +60,11 @@ services:
       MERLIN_WORKER_LOCAL_STORE: /usr/src/app/merlin_file_store
       UNTRUE_PLAN_START: "2000-01-01T11:58:55.816Z"
     image: "ghcr.io/nasa-ammos/aerie-merlin-worker:v2.2.0"
-    ports: ["27187:8080"]
+    ports: ["5007:5005", "27187:8080"]
     restart: always
     volumes:
       - aerie_file_store:/usr/src/app/merlin_file_store:ro
+
   aerie_scheduler:
     container_name: aerie_scheduler
     depends_on: ["aerie_merlin", "postgres"]
