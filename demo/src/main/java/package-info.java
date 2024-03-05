@@ -11,5 +11,5 @@ package demosystem;
 import gov.nasa.jpl.aerie.contrib.serialization.rulesets.BasicValueMappers;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.MissionModel;
 import gov.nasa.jpl.aerie_data.mappers.CommonValueMappers;
-import demosystem.activities.DeleteData;
-import demosystem.activities.GenerateData;
+import gov.nasa.jpl.aerie_data.activities.DeleteData;
+import gov.nasa.jpl.aerie_data.activities.GenerateData;

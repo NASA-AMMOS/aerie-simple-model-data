@@ -1,4 +1,4 @@
-package demosystem.activities;
+package gov.nasa.jpl.aerie_data.activities;
 
 import gov.nasa.jpl.aerie.contrib.streamline.core.Resources;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.ActivityType;
