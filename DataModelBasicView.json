@@ -9,9 +9,9 @@
       "rightHidden": false,
       "leftRowSizes": "1fr",
       "rightRowSizes": "1fr",
-      "middleRowSizes": "2.51472fr 3px 0.485274fr",
+      "middleRowSizes": "2.77977fr 3px 0.220229fr",
       "leftComponentTop": "ActivityTypesPanel",
-      "rightComponentTop": "TimelineEditorPanel",
+      "rightComponentTop": "ActivityFormPanel",
       "leftComponentBottom": "SimulationPanel",
       "rightComponentBottom": "TimelineEditorPanel",
       "middleComponentBottom": "ActivityDirectivesTablePanel"
@@ -35,15 +35,15 @@
             "layers": [
               {
                 "id": 0,
+                "name": "",
                 "filter": {
                   "activity": {
                     "types": [
-                      "AddData",
-                      "ChangeRate",
-                      "ChangeVolume",
+                      "ChangeDataGenerationRate",
                       "DeleteData",
-                      "RandomActOfViolence",
-                      "Telecom"
+                      "GenerateData",
+                      "PlaybackData",
+                      "ReprioritizeData"
                     ]
                   }
                 },
@@ -58,49 +58,81 @@
             "horizontalGuides": []
           },
           {
-            "id": 1,
-            "name": "Data Volumes (Onboard=blue ground=red)",
+            "id": 2,
+            "name": "Onboard Bin Data Volumes",
             "yAxes": [
               {
-                "id": 0,
-                "color": "#000000",
+                "id": 1,
+                "color": "#1b1d1e",
                 "label": {
-                  "text": "Label"
+                  "text": "Y Axis (1)"
                 },
                 "tickCount": 4,
-                "scaleDomain": [
-                  0,
-                  3000.0000000000005
-                ]
+                "domainFitMode": "fitTimeWindow",
+                "renderTickLines": true
               }
             ],
-            "height": 200,
+            "height": 160,
             "layers": [
               {
-                "id": 1,
+                "id": 2,
+                "name": "",
                 "filter": {
                   "resource": {
                     "names": [
-                      "onboard volume"
+                      "onboard.volume"
                     ]
                   }
                 },
-                "yAxisId": 0,
+                "yAxisId": 1,
+                "chartType": "line",
+                "lineColor": "#75b53b",
+                "lineWidth": 1,
+                "pointRadius": 2
+              },
+              {
+                "id": 3,
+                "name": "",
+                "filter": {
+                  "resource": {
+                    "names": [
+                      "sc bin 1.volume"
+                    ]
+                  }
+                },
+                "yAxisId": 1,
                 "chartType": "line",
                 "lineColor": "#283593",
                 "lineWidth": 1,
                 "pointRadius": 2
               },
               {
-                "id": 2,
+                "id": 4,
+                "name": "",
                 "filter": {
                   "resource": {
                     "names": [
-                      "ground volume"
+                      "sc bin 2.volume"
                     ]
                   }
                 },
-                "yAxisId": 0,
+                "yAxisId": 1,
+                "chartType": "line",
+                "lineColor": "#ff7f0e",
+                "lineWidth": 1,
+                "pointRadius": 2
+              },
+              {
+                "id": 5,
+                "name": "",
+                "filter": {
+                  "resource": {
+                    "names": [
+                      "onboard.maxVolume"
+                    ]
+                  }
+                },
+                "yAxisId": 1,
                 "chartType": "line",
                 "lineColor": "#e31a1c",
                 "lineWidth": 1,
@@ -110,9 +142,155 @@
             "expanded": true,
             "autoAdjustHeight": false,
             "horizontalGuides": []
+          },
+          {
+            "id": 3,
+            "name": "Ground Bin Data Volumes",
+            "yAxes": [
+              {
+                "id": 2,
+                "color": "#1b1d1e",
+                "label": {
+                  "text": "Y Axis (2)"
+                },
+                "tickCount": 4,
+                "domainFitMode": "fitTimeWindow",
+                "renderTickLines": true
+              }
+            ],
+            "height": 160,
+            "layers": [
+              {
+                "id": 6,
+                "name": "",
+                "filter": {
+                  "resource": {
+                    "names": [
+                      "ground.volume"
+                    ]
+                  }
+                },
+                "yAxisId": 2,
+                "chartType": "line",
+                "lineColor": "#75b53b",
+                "lineWidth": 1,
+                "pointRadius": 2
+              },
+              {
+                "id": 7,
+                "name": "",
+                "filter": {
+                  "resource": {
+                    "names": [
+                      "gnd bin 1.volume"
+                    ]
+                  }
+                },
+                "yAxisId": 2,
+                "chartType": "line",
+                "lineColor": "#283593",
+                "lineWidth": 1,
+                "pointRadius": 2
+              },
+              {
+                "id": 8,
+                "name": "",
+                "filter": {
+                  "resource": {
+                    "names": [
+                      "gnd bin 2.volume"
+                    ]
+                  }
+                },
+                "yAxisId": 2,
+                "chartType": "line",
+                "lineColor": "#ff7f0e",
+                "lineWidth": 1,
+                "pointRadius": 2
+              }
+            ],
+            "expanded": true,
+            "autoAdjustHeight": false,
+            "horizontalGuides": []
+          },
+          {
+            "id": 1,
+            "name": "durationRequestedToDownlink",
+            "yAxes": [
+              {
+                "id": 0,
+                "color": "#1b1d1e",
+                "label": {
+                  "text": "durationRequestedToDownlink"
+                },
+                "tickCount": 5,
+                "domainFitMode": "fitTimeWindow",
+                "renderTickLines": true
+              }
+            ],
+            "height": 100,
+            "layers": [
+              {
+                "id": 1,
+                "name": "",
+                "filter": {
+                  "resource": {
+                    "names": [
+                      "durationRequestedToDownlink"
+                    ]
+                  }
+                },
+                "yAxisId": 0,
+                "chartType": "line",
+                "lineColor": "#283593",
+                "lineWidth": 1,
+                "pointRadius": 2
+              }
+            ],
+            "expanded": true,
+            "autoAdjustHeight": false,
+            "horizontalGuides": []
+          },
+          {
+            "autoAdjustHeight": false,
+            "expanded": true,
+            "height": 160,
+            "horizontalGuides": [],
+            "id": 4,
+            "layers": [
+              {
+                "chartType": "line",
+                "filter": {
+                  "resource": {
+                    "names": [
+                      "volumeRequestedToDownlink"
+                    ]
+                  }
+                },
+                "id": 9,
+                "lineColor": "#283593",
+                "lineWidth": 1,
+                "name": "",
+                "pointRadius": 2,
+                "yAxisId": 3
+              }
+            ],
+            "name": "volumeRequestedToDownlink",
+            "yAxes": [
+              {
+                "color": "#1b1d1e",
+                "domainFitMode": "fitTimeWindow",
+                "id": 3,
+                "label": {
+                  "text": "Y Axis (3)"
+                },
+                "renderTickLines": true,
+                "tickCount": 4
+              }
+            ]
           }
         ],
-        "marginLeft": 110,
+        "marginLeft": 160,
         "marginRight": 30,
         "verticalGuides": []
       }
@@ -178,132 +356,58 @@
           "headerName": "Duration"
         }
       ],
-      "columnStates": [
-        {
-          "flex": null,
-          "hide": false,
-          "sort": null,
-          "colId": "dataset_id",
-          "pivot": false,
-          "width": 110.79999999999995,
-          "pinned": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "sortIndex": null,
-          "pivotIndex": null,
-          "rowGroupIndex": null
-        },
-        {
-          "flex": null,
-          "hide": false,
-          "sort": null,
-          "colId": "derived_start_time",
-          "pivot": false,
-          "width": 108,
-          "pinned": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "sortIndex": null,
-          "pivotIndex": null,
-          "rowGroupIndex": null
-        },
-        {
-          "flex": null,
-          "hide": false,
-          "sort": null,
-          "colId": "derived_end_time",
-          "pivot": false,
-          "width": 108,
-          "pinned": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "sortIndex": null,
-          "pivotIndex": null,
-          "rowGroupIndex": null
-        },
-        {
-          "flex": null,
-          "hide": false,
-          "sort": null,
-          "colId": "duration",
-          "pivot": false,
-          "width": 108,
-          "pinned": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "sortIndex": null,
-          "pivotIndex": null,
-          "rowGroupIndex": null
-        },
-        {
-          "flex": null,
-          "hide": false,
-          "sort": null,
-          "colId": "id",
-          "pivot": false,
-          "width": 108,
-          "pinned": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "sortIndex": null,
-          "pivotIndex": null,
-          "rowGroupIndex": null
-        },
-        {
-          "flex": null,
-          "hide": false,
-          "sort": null,
-          "colId": "parent_id",
-          "pivot": false,
-          "width": 108,
-          "pinned": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "sortIndex": null,
-          "pivotIndex": null,
-          "rowGroupIndex": null
-        },
-        {
-          "flex": null,
-          "hide": false,
-          "sort": null,
-          "colId": "start_offset",
-          "pivot": false,
-          "width": 108,
-          "pinned": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "sortIndex": null,
-          "pivotIndex": null,
-          "rowGroupIndex": null
-        },
-        {
-          "flex": null,
-          "hide": false,
-          "sort": null,
-          "colId": "type",
-          "pivot": false,
-          "width": 108,
-          "pinned": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "sortIndex": null,
-          "pivotIndex": null,
-          "rowGroupIndex": null
-        }
-      ]
+      "columnStates": [],
+      "autoSizeColumns": "fill"
     },
     "activityDirectivesTable": {
       "columnDefs": [
         {
+          "sort": null,
+          "colId": "arguments",
+          "pivot": false,
+          "width": 200,
+          "pinned": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "sortIndex": null,
+          "pivotIndex": null,
+          "rowGroupIndex": null
+        },
+        {
           "field": "id",
+          "width": 80,
           "filter": "text",
           "sortable": true,
           "resizable": true,
           "headerName": "ID"
         },
         {
+          "sort": null,
+          "colId": "last_modified_at",
+          "pivot": false,
+          "width": 200,
+          "pinned": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "sortIndex": null,
+          "pivotIndex": null,
+          "rowGroupIndex": null
+        },
+        {
+          "sort": null,
+          "colId": "metadata",
+          "pivot": false,
+          "width": 200,
+          "pinned": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "sortIndex": null,
+          "pivotIndex": null,
+          "rowGroupIndex": null
+        },
+        {
           "field": "name",
+          "width": 200,
           "filter": "text",
           "sortable": true,
           "resizable": true,
@@ -317,115 +421,6 @@
           "headerName": "Type"
         },
         {
-          "field": "start_offset",
-          "filter": "text",
-          "sortable": true,
-          "resizable": true,
-          "headerName": "Start Offset"
-        },
-        {
-          "field": "derived_start_time",
-          "filter": "text",
-          "sortable": true,
-          "resizable": true,
-          "headerName": "Absolute Start Time"
-        },
-        {
-          "field": "created_at",
-          "filter": "text",
-          "sortable": true,
-          "resizable": true,
-          "headerName": "Created At"
-        }
-      ],
-      "columnStates": [
-        {
-          "flex": null,
-          "hide": true,
-          "sort": null,
-          "colId": "arguments",
-          "pivot": false,
-          "width": 200,
-          "pinned": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "sortIndex": null,
-          "pivotIndex": null,
-          "rowGroupIndex": null
-        },
-        {
-          "flex": null,
-          "hide": true,
-          "sort": null,
-          "colId": "created_at",
-          "pivot": false,
-          "width": 200,
-          "pinned": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "sortIndex": null,
-          "pivotIndex": null,
-          "rowGroupIndex": null
-        },
-        {
-          "flex": null,
-          "hide": false,
-          "sort": null,
-          "colId": "id",
-          "pivot": false,
-          "width": 80,
-          "pinned": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "sortIndex": null,
-          "pivotIndex": null,
-          "rowGroupIndex": null
-        },
-        {
-          "flex": null,
-          "hide": true,
-          "sort": null,
-          "colId": "last_modified_at",
-          "pivot": false,
-          "width": 200,
-          "pinned": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "sortIndex": null,
-          "pivotIndex": null,
-          "rowGroupIndex": null
-        },
-        {
-          "flex": null,
-          "hide": true,
-          "sort": null,
-          "colId": "metadata",
-          "pivot": false,
-          "width": 200,
-          "pinned": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "sortIndex": null,
-          "pivotIndex": null,
-          "rowGroupIndex": null
-        },
-        {
-          "flex": null,
-          "hide": false,
-          "sort": null,
-          "colId": "name",
-          "pivot": false,
-          "width": 200,
-          "pinned": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "sortIndex": null,
-          "pivotIndex": null,
-          "rowGroupIndex": null
-        },
-        {
-          "flex": null,
-          "hide": true,
           "sort": null,
           "colId": "source_scheduling_goal_id",
           "pivot": false,
@@ -438,8 +433,13 @@
           "rowGroupIndex": null
         },
         {
-          "flex": null,
-          "hide": true,
+          "field": "start_offset",
+          "filter": "text",
+          "sortable": true,
+          "resizable": true,
+          "headerName": "Start Offset"
+        },
+        {
           "sort": null,
           "colId": "tags",
           "pivot": false,
@@ -452,8 +452,6 @@
           "rowGroupIndex": null
         },
         {
-          "flex": null,
-          "hide": false,
           "sort": null,
           "colId": "type",
           "pivot": false,
@@ -466,8 +464,6 @@
           "rowGroupIndex": null
         },
         {
-          "flex": null,
-          "hide": true,
           "sort": null,
           "colId": "anchor_id",
           "pivot": false,
@@ -480,8 +476,18 @@
           "rowGroupIndex": null
         },
         {
-          "flex": null,
-          "hide": true,
+          "sort": null,
+          "colId": "applied_preset",
+          "pivot": false,
+          "width": 200,
+          "pinned": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "sortIndex": null,
+          "pivotIndex": null,
+          "rowGroupIndex": null
+        },
+        {
           "sort": null,
           "colId": "anchored_to_start",
           "pivot": false,
@@ -494,22 +500,14 @@
           "rowGroupIndex": null
         },
         {
-          "flex": null,
-          "hide": false,
-          "sort": null,
-          "colId": "derived_start_time",
-          "pivot": false,
+          "field": "derived_start_time",
           "width": 200,
-          "pinned": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "sortIndex": null,
-          "pivotIndex": null,
-          "rowGroupIndex": null
+          "filter": "text",
+          "sortable": true,
+          "resizable": true,
+          "headerName": "Absolute Start Time"
         },
         {
-          "flex": null,
-          "hide": false,
           "sort": null,
           "colId": "start_offset",
           "pivot": false,
@@ -520,8 +518,230 @@
           "sortIndex": null,
           "pivotIndex": null,
           "rowGroupIndex": null
+        },
+        {
+          "hide": true,
+          "field": "created_at",
+          "width": 200,
+          "filter": "text",
+          "sortable": true,
+          "resizable": true,
+          "headerName": "Created At"
         }
-      ]
+      ],
+      "columnStates": [
+        {
+          "colId": "errorCounts",
+          "width": 70,
+          "hide": false,
+          "pinned": null,
+          "sort": null,
+          "sortIndex": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "rowGroupIndex": null,
+          "pivot": false,
+          "pivotIndex": null,
+          "flex": null
+        },
+        {
+          "colId": "anchor_id",
+          "width": 200,
+          "hide": true,
+          "pinned": null,
+          "sort": null,
+          "sortIndex": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "rowGroupIndex": null,
+          "pivot": false,
+          "pivotIndex": null,
+          "flex": null
+        },
+        {
+          "colId": "anchored_to_start",
+          "width": 200,
+          "hide": true,
+          "pinned": null,
+          "sort": null,
+          "sortIndex": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "rowGroupIndex": null,
+          "pivot": false,
+          "pivotIndex": null,
+          "flex": null
+        },
+        {
+          "colId": "applied_preset",
+          "width": 200,
+          "hide": true,
+          "pinned": null,
+          "sort": null,
+          "sortIndex": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "rowGroupIndex": null,
+          "pivot": false,
+          "pivotIndex": null,
+          "flex": null
+        },
+        {
+          "colId": "arguments",
+          "width": 200,
+          "hide": true,
+          "pinned": null,
+          "sort": null,
+          "sortIndex": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "rowGroupIndex": null,
+          "pivot": false,
+          "pivotIndex": null,
+          "flex": null
+        },
+        {
+          "colId": "created_at",
+          "width": 200,
+          "hide": true,
+          "pinned": null,
+          "sort": null,
+          "sortIndex": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "rowGroupIndex": null,
+          "pivot": false,
+          "pivotIndex": null,
+          "flex": null
+        },
+        {
+          "colId": "derived_start_time",
+          "width": 171.79999999999995,
+          "hide": false,
+          "pinned": null,
+          "sort": null,
+          "sortIndex": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "rowGroupIndex": null,
+          "pivot": false,
+          "pivotIndex": null,
+          "flex": null
+        },
+        {
+          "colId": "id",
+          "width": 69,
+          "hide": false,
+          "pinned": null,
+          "sort": null,
+          "sortIndex": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "rowGroupIndex": null,
+          "pivot": false,
+          "pivotIndex": null,
+          "flex": null
+        },
+        {
+          "colId": "last_modified_at",
+          "width": 200,
+          "hide": true,
+          "pinned": null,
+          "sort": null,
+          "sortIndex": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "rowGroupIndex": null,
+          "pivot": false,
+          "pivotIndex": null,
+          "flex": null
+        },
+        {
+          "colId": "metadata",
+          "width": 200,
+          "hide": true,
+          "pinned": null,
+          "sort": null,
+          "sortIndex": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "rowGroupIndex": null,
+          "pivot": false,
+          "pivotIndex": null,
+          "flex": null
+        },
+        {
+          "colId": "name",
+          "width": 172,
+          "hide": false,
+          "pinned": null,
+          "sort": null,
+          "sortIndex": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "rowGroupIndex": null,
+          "pivot": false,
+          "pivotIndex": null,
+          "flex": null
+        },
+        {
+          "colId": "source_scheduling_goal_id",
+          "width": 200,
+          "hide": true,
+          "pinned": null,
+          "sort": null,
+          "sortIndex": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "rowGroupIndex": null,
+          "pivot": false,
+          "pivotIndex": null,
+          "flex": null
+        },
+        {
+          "colId": "start_offset",
+          "width": 172,
+          "hide": false,
+          "pinned": null,
+          "sort": null,
+          "sortIndex": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "rowGroupIndex": null,
+          "pivot": false,
+          "pivotIndex": null,
+          "flex": null
+        },
+        {
+          "colId": "tags",
+          "width": 220,
+          "hide": true,
+          "pinned": null,
+          "sort": null,
+          "sortIndex": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "rowGroupIndex": null,
+          "pivot": false,
+          "pivotIndex": null,
+          "flex": null
+        },
+        {
+          "colId": "type",
+          "width": 172,
+          "hide": false,
+          "pinned": null,
+          "sort": null,
+          "sortIndex": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "rowGroupIndex": null,
+          "pivot": false,
+          "pivotIndex": null,
+          "flex": null
+        }
+      ],
+      "autoSizeColumns": "fill"
     }
   }
 }
