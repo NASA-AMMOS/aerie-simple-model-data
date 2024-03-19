@@ -21,6 +21,9 @@ import static gov.nasa.jpl.aerie.merlin.framework.ModelActions.spawn;
 public class Data {
   private LinearBoundaryConsistencySolver rateSolver = new LinearBoundaryConsistencySolver("DataModel Rate Solver");
 
+  /**
+   * Specifies onboard and ground buckets
+   */
   public Bucket scBin1 = new Bucket(rateSolver, "sc bin 1", true, Collections.emptyList());
   public Bucket scBin2 = new Bucket(rateSolver, "sc bin 2", true, Collections.emptyList());
   public Bucket onboard = new Bucket(rateSolver, "onboard", false, List.of(scBin1, scBin2), constant(1e10)); // 10Gb

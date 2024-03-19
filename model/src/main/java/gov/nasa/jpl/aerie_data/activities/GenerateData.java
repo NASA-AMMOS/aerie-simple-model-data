@@ -11,18 +11,33 @@ import java.util.Optional;
 
 @ActivityType("GenerateData")
 public class GenerateData {
+  /**
+   * The bin to generate data in
+   */
   @Export.Parameter
   public Data.Bin bin = Data.Bin.scBin1;
 
+  /**
+   * The rate of data generation
+   */
   @Export.Parameter
   public Optional<Double> rate = Optional.of(0.0);
 
+  /**
+   * The volume of data generation
+   */
   @Export.Parameter
   public Optional<Double> volume = Optional.of(0.0);
 
+  /**
+   * The duration of data generation
+   */
   @Export.Parameter
   public Optional<Duration> duration = Optional.of(Duration.of(1, Duration.SECOND));
 
+  /**
+   * At least two of the above parameters above need to be specified
+   */
   @Export.Validation("Two or three downlink goals must be specified: rate, volume, and/or duration.")
   @Export.Validation.Subject({"rate", "volume", "duration"})
   public boolean validateNonEmptyGoal() {
@@ -40,6 +55,10 @@ public class GenerateData {
     binToChange.receive(rate.get(), duration.get());
   }
 
+  /**
+   * Computes the missing value if one of rate, volume, or duration is not specified. If all are specified,
+   * checks to ensure that the values agree, otherwise, computes and replaces one of the parameters
+   */
   void derivedValues() {
     if (rate.isPresent() && volume.isPresent() && duration.isEmpty()) {
       Double seconds = volume.get() / rate.get();

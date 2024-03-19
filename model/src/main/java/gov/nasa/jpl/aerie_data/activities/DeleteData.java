@@ -37,8 +37,6 @@ public class DeleteData {
       case gBin1, gBin2 -> null;
     };
 
-    // TODO -- should we forget about limiting and just track lost data in Data and data that couldn't be deleted in Bucket.
-    // TODO -- we could have a DeleteAllSentData activity
     double currentVolume = currentValue(binToChange.volume);
     double MAX = Double.MAX_VALUE;
     double volumeNotYetDownlinked = groundBin == null ? MAX : (currentValue(binToChange.received) - currentValue(groundBin.received));
@@ -48,10 +46,7 @@ public class DeleteData {
 
     binToChange.remove(actualVolumeDeleted);
 
-    //return new ComputedAttributes(actualVolumeDeleted);
   }
 
-//    @AutoValueMapper.Record
-//    public record ComputedAttributes(double actualVolumeDeleted) {}
 
 }

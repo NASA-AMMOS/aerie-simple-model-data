@@ -14,12 +14,21 @@ import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomi
 @ActivityType("ChangeDataGenerationRate")
 public class ChangeDataGenerationRate {
 
+  /**
+   * The bin whose rate is changed
+   */
   @Export.Parameter
   public Data.Bin bin = Data.Bin.scBin1;
 
+  /**
+   * The rate to instantly change
+   */
   @Export.Parameter
   public double rate = 0.0;
 
+  /**
+   * Eliminates incoming and outgoing flows, only the new data rate is kept
+   */
   @ActivityType.EffectModel
   public void run(DataMissionModel model) {
     Data data = model.getData();
