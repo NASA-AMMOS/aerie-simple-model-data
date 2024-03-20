@@ -9,9 +9,9 @@ The data rates are computed from the desired data rates with the following relat
 Line 1
 $$\text{If } \sum_{j \in C(P(i))} v_j < u_{P(i)}, \text{ then } u_i := u_{P(i)}. \text{ Otherwise, }$$
 Line 2
-$$\text{Let } C := \forall {j \in C(P(i)), j > i}\,:\,v_j \leq 0 \text{ be true when this is the bucket to steal from. }$$
+$$\text{Let } C := \forall {j \in C(P(i)), j > i}\ :\ v_j \leq 0 \text{ be true when this is the bucket to steal from. }$$
 Line 3
-$$\text{Let } E := u_{P(i)} - \sum_{j \in C(P(i))} \min\left( \hat{v}j, 0 \right) \text{ be the available write rate.}$$
+$$\text{Let } E := u_{P(i)}' - \sum_{j \in C(P(i))} \min\left( \hat_j{v}', 0 \right) \text{ be the available write rate.}$$
 Line 4
 $$\text{Let } F := \sum_{j \in C(P(i)),\ j < i} \max\left( \hat{v}'j, 0 \right) \text{ be the write rate used by higher-priority buckets.}$$
 Line 5
