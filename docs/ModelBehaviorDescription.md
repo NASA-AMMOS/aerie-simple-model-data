@@ -11,10 +11,10 @@ $$\text{If } \sum_{j \in C(P(i))} v_j < u_{P(i)}, \text{ then } u_i := u_{P(i)}.
 Line 2
 $$\text{Let } C := \forall {j \in C(P(i)), j > i}\ :\ v_j \leq 0 \text{ be true when this is the bucket to steal from. }$$
 Line 3
-$$\text{Let } E := u_{P(i)}' - \sum_{j \in C(P(i))} \min\left( \hat_j{v}', 0 \right) \text{ be the available write rate.}$$
+$$\text{Let } E := u_{P(i)}' - \sum_{j \in C(P(i))} \min\left( d_j, 0 \right) \text{ be the available write rate.}$$
 Line 4
-$$\text{Let } F := \sum_{j \in C(P(i)),\ j < i} \max\left( \hat{v}'j, 0 \right) \text{ be the write rate used by higher-priority buckets.}$$
+$$\text{Let } F := \sum_{j \in C(P(i)),\ j < i} \max\left( d_j, 0 \right) \text{ be the write rate used by higher-priority buckets.}$$
 Line 5
-$$\text{If } C, u_i := \max\left(0, v_i + \int \min\left( \hat{v}'i, E - F \right) \right) \text{ to let higher-priority buckets steal from us.}$$
+$$\text{If } C, u_i := \max\left(0, v_i + \int \min\left( d_i, E - F \right) \right) \text{ to let higher-priority buckets steal from us.}$$
 Line 6
 $$\text{Otherwise, } u_i := u_{P(i)} \text{ because we can steal if needed.}$$
