@@ -15,8 +15,8 @@ $\text{Otherwise, } u_i := u_{P(i)} \text{ because we can steal if needed.}$
 
 where: \
 $C$ is the child bucket \
-$P$ is the parent bucket, where $P(i)$ is the parent of child i and $C(P(i))$ si the set of children of the parent of child i \
+$P$ is the parent bucket, where $P(i)$ is the parent of child $i$ and $C(P(i))$ is the set of children of the parent of child $i$ \
 $d$ is the desired rate \
-$v$ is the actual rate
-
-TODO: include what u and u' are
+$v$ is the actual rate \
+$u$ is the upper bound \
+$u'$ is the rate of change of the upper bound 
