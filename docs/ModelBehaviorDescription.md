@@ -1,6 +1,12 @@
 # Data Model Behavior Description
 
 ## Bucket Rate Limits
+The representation of data volumes is captured by a `Bucket` class.  This class is meant to be a generic container of
+amounts, not necessarily specific to data.  It is structured such that a parent bucket could have child buckets which
+are prioritized.  If the parent maximum volume is reached, and the child buckets are still receiving data, the highest
+priority bucket would continue to receive data, and data will be simultaneously deleted from the lowest priority bucket
+to give room for the higher priority data.
+
 
 Buckets are limited to a maximum volume. If this volume is reached, higher priority buckets will continue to
 receive data at the specified rate while lower priority buckets will lose data volume to compensate.
