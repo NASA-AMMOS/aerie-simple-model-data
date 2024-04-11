@@ -25,17 +25,13 @@ public class DeleteData {
    * The bin whose data is to be deleted
    */
   @Export.Parameter
-  public Data.Bin bin = Data.Bin.scBin1;
+  public int bin = 0;
 
   @ActivityType.EffectModel
   public void run(DataMissionModel model) {
     Data data = model.getData();
-    var binToChange = data.getBin(bin);
-    var groundBin = switch (bin) {
-      case scBin1 -> data.gBin1;
-      case scBin2 -> data.gBin2;
-      case gBin1, gBin2 -> null;
-    };
+    var binToChange = data.getOnboardBin(bin);
+    var groundBin = data.getGroundBin(bin);
 
     double currentVolume = currentValue(binToChange.volume);
     double MAX = Double.MAX_VALUE;

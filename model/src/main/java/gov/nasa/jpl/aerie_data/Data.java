@@ -19,34 +19,45 @@ import static gov.nasa.jpl.aerie.merlin.framework.ModelActions.spawn;
 
 
 public class Data {
-  private LinearBoundaryConsistencySolver rateSolver = new LinearBoundaryConsistencySolver("DataModel Rate Solver");
+  public static LinearBoundaryConsistencySolver rateSolver = new LinearBoundaryConsistencySolver("DataModel Rate Solver");
 
   /**
    * Specifies onboard and ground buckets
    */
-  public Bucket scBin1 = new Bucket(rateSolver, "sc bin 1", true, Collections.emptyList());
-  public Bucket scBin2 = new Bucket(rateSolver, "sc bin 2", true, Collections.emptyList());
-  public Bucket onboard = new Bucket(rateSolver, "onboard", false, List.of(scBin1, scBin2), constant(1e10)); // 10Gb
 
-  public Bucket gBin1 = new Bucket(rateSolver, "gnd bin 1", true, Collections.emptyList());
-  public Bucket gBin2 = new Bucket(rateSolver, "gnd bin 2", true, Collections.emptyList());
-  public Bucket ground = new Bucket(rateSolver, "ground", false, List.of(gBin1, gBin2));;
+  public Bucket onboard;
+
+  public Bucket ground;
 
   public Resource<Polynomial> dataRate;  // bps
   public MutableResource<Polynomial> volumeRequestedToDownlink = polynomialResource(0.0);
   public MutableResource<Polynomial> durationRequestedToDownlink = polynomialResource(0.0);
 
-  public Bucket getBin(Bin bin) {
-    var bucket = switch (bin) {
-      case scBin1 -> scBin1;
-      case scBin2 -> scBin2;
-      case gBin1 -> gBin1;
-      case gBin2 -> gBin2;
-    };
-    return bucket;
+  public ArrayList<Bucket> onboardBuckets = new ArrayList<>();
+
+  public ArrayList<Bucket> groundBuckets = new ArrayList<>();
+
+  public Bucket getOnboardBin(int bin) {
+    return onboardBuckets.get(bin);
   }
 
-  public Data(Optional<Resource<Polynomial>> dataRate) {
+  public Bucket getGroundBin(int bin) {
+    return groundBuckets.get(bin);
+  }
+
+  public Data(Optional<Resource<Polynomial>> dataRate, int numBuckets, Resource<Polynomial> upperBound) {
+
+    for (int i = 0; i < numBuckets; ++i) {
+      Bucket scBin = new Bucket("scBin" + i, true, Collections.emptyList());
+      onboardBuckets.add(scBin);
+      Bucket gBin = new Bucket("gBin" + i, true, Collections.emptyList());
+      groundBuckets.add(gBin);
+    }
+
+    onboard = new Bucket("onboard", false, onboardBuckets, upperBound); // 10Gb
+
+    ground = new Bucket("ground", false, groundBuckets);
+
     if (dataRate.isPresent()) {
       this.dataRate = dataRate.get();
     } else {
@@ -92,5 +103,4 @@ public class Data {
     registrar.real("playbackDataRate", assumeLinear(dataRate));
   }
 
-  public enum Bin { scBin1, scBin2, gBin1, gBin2 }
 }

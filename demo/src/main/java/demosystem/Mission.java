@@ -5,9 +5,13 @@ import gov.nasa.jpl.aerie.contrib.streamline.core.Resources;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.Registrar;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.linear.Linear;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomial;
+import gov.nasa.jpl.aerie_data.Bucket;
 import gov.nasa.jpl.aerie_data.Data;
 import gov.nasa.jpl.aerie_data.DataMissionModel;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.PolynomialResources.*;
@@ -15,7 +19,8 @@ import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomi
 public class Mission implements DataMissionModel {
 
   private final Resource<Polynomial> dataRate = polynomialResource(100); // 100 bps
-  public Data data = new Data(Optional.of(dataRate));
+
+  public Data data = new Data(Optional.of(dataRate), 2, constant(1e10));
 
   public Mission(gov.nasa.jpl.aerie.merlin.framework.Registrar registrar, Configuration config) {
     Registrar newRegistrar = new Registrar(registrar, Registrar.ErrorBehavior.Throw);

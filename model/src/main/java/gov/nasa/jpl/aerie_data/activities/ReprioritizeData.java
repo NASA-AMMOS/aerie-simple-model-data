@@ -21,19 +21,19 @@ public class ReprioritizeData {
    * The bin whose data is to be reprioritized; i.e. the old priority
    */
   @Export.Parameter
-  public Data.Bin bin = Data.Bin.scBin1;
+  public int bin = 0;
 
   /**
    * The bin receiving the reprioritized data; i.e., the new priority
    */
   @Export.Parameter
-  public Data.Bin newBin = Data.Bin.scBin2;
+  public int newBin = 1;
 
   @ActivityType.EffectModel
   public void run(DataMissionModel model) {
     Data data = model.getData();
-    var fromBin = data.getBin(bin);
-    var toBin = data.getBin(newBin);
+    var fromBin = data.getOnboardBin(bin);
+    var toBin = data.getOnboardBin(newBin);
 
     double currentVolume = currentValue(fromBin.volume);
     double receivableVolume = currentValue(toBin.volume_ub) - currentValue(toBin.volume);

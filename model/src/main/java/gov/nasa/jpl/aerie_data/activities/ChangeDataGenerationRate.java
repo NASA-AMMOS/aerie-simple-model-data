@@ -18,7 +18,7 @@ public class ChangeDataGenerationRate {
    * The bin whose rate is changed
    */
   @Export.Parameter
-  public Data.Bin bin = Data.Bin.scBin1;
+  public int bin = 0;
 
   /**
    * The rate to instantly change
@@ -33,7 +33,7 @@ public class ChangeDataGenerationRate {
   public void run(DataMissionModel model) {
     Data data = model.getData();
     if (rate == 0.0) return;
-    var binToChange = data.getBin(bin);
+    var binToChange = data.getOnboardBin(bin);
 
     System.out.println("ChangeDataGenerationRate(" + Resources.currentTime() + "): rate = " + rate);
 

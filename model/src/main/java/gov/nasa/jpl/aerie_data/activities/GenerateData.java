@@ -15,7 +15,7 @@ public class GenerateData {
    * The bin to generate data in
    */
   @Export.Parameter
-  public Data.Bin bin = Data.Bin.scBin1;
+  public int bin = 0;
 
   /**
    * The rate of data generation
@@ -50,7 +50,7 @@ public class GenerateData {
   @ActivityType.EffectModel
   public void run(DataMissionModel model) {
     derivedValues();
-    var binToChange = model.getData().getBin(bin);
+    var binToChange = model.getData().getOnboardBin(bin);
     System.out.println("GenerateData(" + Resources.currentTime() + "): rate = " + rate.get() + ", duration = " + duration.get());
     binToChange.receive(rate.get(), duration.get());
   }

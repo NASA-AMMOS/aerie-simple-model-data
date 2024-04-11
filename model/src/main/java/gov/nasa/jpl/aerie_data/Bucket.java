@@ -20,6 +20,7 @@ import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.LinearBo
 import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.LinearBoundaryConsistencySolver.LinearExpression.lx;
 import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomial.polynomial;
 import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.PolynomialResources.*;
+import static gov.nasa.jpl.aerie_data.Data.rateSolver;
 
 /**
  * A container or category representing volume and constant & linear changes in the volume of something (e.g., data).
@@ -102,24 +103,22 @@ public class Bucket {
 
   /**
    * Create a {@link Bucket} without an explicit upper bound on its volume
-   * @param rateSolver a solver to help determine the actual rates of received and removed volume based on a system of equations
    * @param name the name of the {@link Bucket}
    * @param isChild whether or not this {@link Bucket} is a child of another
    * @param children the child {@link Bucket}s in priority order
    */
-  public Bucket(LinearBoundaryConsistencySolver rateSolver, String name, boolean isChild, List<Bucket> children) {
-    this(rateSolver, name, isChild, children, max_bound);
+  public Bucket(String name, boolean isChild, List<Bucket> children) {
+    this(name, isChild, children, max_bound);
   }
 
   /**
    * Create a {@link Bucket} without an explicit upper bound on its volume
-   * @param rateSolver a solver to help determine the actual rates of received and removed volume based on a system of equations
    * @param name the name of the {@link Bucket}
    * @param isChild whether or not this {@link Bucket} is a child of another
    * @param children the child {@link Bucket}s in priority order
    * @param upperBound an explicit upper bound on this {@link Bucket}, implicitly imposed on any children
    */
-  public Bucket(LinearBoundaryConsistencySolver rateSolver, String name, boolean isChild, List<Bucket> children, Resource<Polynomial> upperBound) {
+  public Bucket(String name, boolean isChild, List<Bucket> children, Resource<Polynomial> upperBound) {
     this.name = name;
     this.desiredReceiveRate = polynomialResource(0.0);
     this.desiredRemoveRate = polynomialResource(0.0);
