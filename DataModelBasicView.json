@@ -11,7 +11,7 @@
       "rightRowSizes": "1fr",
       "middleRowSizes": "2.77977fr 3px 0.220229fr",
       "leftComponentTop": "ActivityTypesPanel",
-      "rightComponentTop": "ActivityFormPanel",
+      "rightComponentTop": "TimelineEditorPanel",
       "leftComponentBottom": "SimulationPanel",
       "rightComponentBottom": "TimelineEditorPanel",
       "middleComponentBottom": "ActivityDirectivesTablePanel"
@@ -96,7 +96,7 @@
                 "filter": {
                   "resource": {
                     "names": [
-                      "sc bin 1.volume"
+                      "scBin0.volume"
                     ]
                   }
                 },
@@ -112,7 +112,7 @@
                 "filter": {
                   "resource": {
                     "names": [
-                      "sc bin 2.volume"
+                      "scBin1.volume"
                     ]
                   }
                 },
@@ -182,7 +182,7 @@
                 "filter": {
                   "resource": {
                     "names": [
-                      "gnd bin 1.volume"
+                      "gBin0.volume"
                     ]
                   }
                 },
@@ -198,7 +198,7 @@
                 "filter": {
                   "resource": {
                     "names": [
-                      "gnd bin 2.volume"
+                      "gBin1.volume"
                     ]
                   }
                 },
@@ -252,14 +252,25 @@
             "horizontalGuides": []
           },
           {
-            "autoAdjustHeight": false,
-            "expanded": true,
-            "height": 160,
-            "horizontalGuides": [],
             "id": 4,
+            "name": "volumeRequestedToDownlink",
+            "yAxes": [
+              {
+                "id": 3,
+                "color": "#1b1d1e",
+                "label": {
+                  "text": "Y Axis (3)"
+                },
+                "tickCount": 4,
+                "domainFitMode": "fitTimeWindow",
+                "renderTickLines": true
+              }
+            ],
+            "height": 160,
             "layers": [
               {
-                "chartType": "line",
+                "id": 9,
+                "name": "",
                 "filter": {
                   "resource": {
                     "names": [
@@ -267,27 +278,16 @@
                     ]
                   }
                 },
-                "id": 9,
+                "yAxisId": 3,
+                "chartType": "line",
                 "lineColor": "#283593",
                 "lineWidth": 1,
-                "name": "",
-                "pointRadius": 2,
-                "yAxisId": 3
+                "pointRadius": 2
               }
             ],
-            "name": "volumeRequestedToDownlink",
-            "yAxes": [
-              {
-                "color": "#1b1d1e",
-                "domainFitMode": "fitTimeWindow",
-                "id": 3,
-                "label": {
-                  "text": "Y Axis (3)"
-                },
-                "renderTickLines": true,
-                "tickCount": 4
-              }
-            ]
+            "expanded": true,
+            "autoAdjustHeight": false,
+            "horizontalGuides": []
           }
         ],
         "marginLeft": 160,
@@ -531,214 +531,242 @@
       ],
       "columnStates": [
         {
+          "flex": null,
+          "hide": false,
+          "sort": null,
           "colId": "errorCounts",
+          "pivot": false,
           "width": 70,
-          "hide": false,
           "pinned": null,
-          "sort": null,
-          "sortIndex": null,
           "aggFunc": null,
           "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
+          "sortIndex": null,
           "pivotIndex": null,
-          "flex": null
+          "rowGroupIndex": null
         },
         {
+          "flex": null,
+          "hide": true,
+          "sort": null,
           "colId": "anchor_id",
+          "pivot": false,
           "width": 200,
-          "hide": true,
           "pinned": null,
-          "sort": null,
-          "sortIndex": null,
           "aggFunc": null,
           "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
+          "sortIndex": null,
           "pivotIndex": null,
-          "flex": null
+          "rowGroupIndex": null
         },
         {
+          "flex": null,
+          "hide": true,
+          "sort": null,
           "colId": "anchored_to_start",
+          "pivot": false,
           "width": 200,
-          "hide": true,
           "pinned": null,
-          "sort": null,
-          "sortIndex": null,
           "aggFunc": null,
           "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
+          "sortIndex": null,
           "pivotIndex": null,
-          "flex": null
+          "rowGroupIndex": null
         },
         {
+          "flex": null,
+          "hide": true,
+          "sort": null,
           "colId": "applied_preset",
+          "pivot": false,
           "width": 200,
-          "hide": true,
           "pinned": null,
-          "sort": null,
-          "sortIndex": null,
           "aggFunc": null,
           "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
+          "sortIndex": null,
           "pivotIndex": null,
-          "flex": null
+          "rowGroupIndex": null
         },
         {
+          "flex": null,
+          "hide": true,
+          "sort": null,
           "colId": "arguments",
+          "pivot": false,
           "width": 200,
-          "hide": true,
           "pinned": null,
-          "sort": null,
-          "sortIndex": null,
           "aggFunc": null,
           "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
+          "sortIndex": null,
           "pivotIndex": null,
-          "flex": null
+          "rowGroupIndex": null
         },
         {
+          "flex": null,
+          "hide": true,
+          "sort": null,
           "colId": "created_at",
+          "pivot": false,
           "width": 200,
-          "hide": true,
           "pinned": null,
-          "sort": null,
-          "sortIndex": null,
           "aggFunc": null,
           "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
+          "sortIndex": null,
           "pivotIndex": null,
-          "flex": null
+          "rowGroupIndex": null
         },
         {
-          "colId": "derived_start_time",
-          "width": 171.79999999999995,
+          "flex": null,
           "hide": false,
-          "pinned": null,
           "sort": null,
-          "sortIndex": null,
-          "aggFunc": null,
-          "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
-          "pivotIndex": null,
-          "flex": null
-        },
-        {
           "colId": "id",
-          "width": 69,
-          "hide": false,
+          "pivot": false,
+          "width": 87.6099999999999,
           "pinned": null,
-          "sort": null,
-          "sortIndex": null,
           "aggFunc": null,
           "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
+          "sortIndex": null,
           "pivotIndex": null,
-          "flex": null
+          "rowGroupIndex": null
         },
         {
+          "flex": null,
+          "hide": true,
+          "sort": null,
           "colId": "last_modified_at",
+          "pivot": false,
           "width": 200,
-          "hide": true,
           "pinned": null,
-          "sort": null,
-          "sortIndex": null,
           "aggFunc": null,
           "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
+          "sortIndex": null,
           "pivotIndex": null,
-          "flex": null
+          "rowGroupIndex": null
         },
         {
+          "flex": null,
+          "hide": true,
+          "sort": null,
           "colId": "metadata",
+          "pivot": false,
           "width": 200,
-          "hide": true,
           "pinned": null,
-          "sort": null,
-          "sortIndex": null,
           "aggFunc": null,
           "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
+          "sortIndex": null,
           "pivotIndex": null,
-          "flex": null
+          "rowGroupIndex": null
         },
         {
+          "flex": null,
+          "hide": false,
+          "sort": null,
           "colId": "name",
-          "width": 172,
-          "hide": false,
+          "pivot": false,
+          "width": 218,
           "pinned": null,
-          "sort": null,
-          "sortIndex": null,
           "aggFunc": null,
           "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
+          "sortIndex": null,
           "pivotIndex": null,
-          "flex": null
+          "rowGroupIndex": null
         },
         {
+          "flex": null,
+          "hide": true,
+          "sort": null,
           "colId": "source_scheduling_goal_id",
+          "pivot": false,
           "width": 200,
-          "hide": true,
           "pinned": null,
-          "sort": null,
-          "sortIndex": null,
           "aggFunc": null,
           "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
+          "sortIndex": null,
           "pivotIndex": null,
-          "flex": null
+          "rowGroupIndex": null
         },
         {
+          "flex": null,
+          "hide": false,
+          "sort": null,
           "colId": "start_offset",
-          "width": 172,
-          "hide": false,
+          "pivot": false,
+          "width": 218,
           "pinned": null,
-          "sort": null,
-          "sortIndex": null,
           "aggFunc": null,
           "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
+          "sortIndex": null,
           "pivotIndex": null,
-          "flex": null
+          "rowGroupIndex": null
         },
         {
-          "colId": "tags",
-          "width": 220,
+          "flex": null,
           "hide": true,
-          "pinned": null,
           "sort": null,
-          "sortIndex": null,
+          "colId": "tags",
+          "pivot": false,
+          "width": 220,
+          "pinned": null,
           "aggFunc": null,
           "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
+          "sortIndex": null,
           "pivotIndex": null,
-          "flex": null
+          "rowGroupIndex": null
         },
         {
-          "colId": "type",
-          "width": 172,
+          "flex": null,
           "hide": false,
-          "pinned": null,
           "sort": null,
-          "sortIndex": null,
+          "colId": "type",
+          "pivot": false,
+          "width": 218,
+          "pinned": null,
           "aggFunc": null,
           "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
+          "sortIndex": null,
           "pivotIndex": null,
-          "flex": null
+          "rowGroupIndex": null
+        },
+        {
+          "flex": null,
+          "hide": true,
+          "sort": null,
+          "colId": "created_by",
+          "pivot": false,
+          "width": 200,
+          "pinned": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "sortIndex": null,
+          "pivotIndex": null,
+          "rowGroupIndex": null
+        },
+        {
+          "flex": null,
+          "hide": false,
+          "sort": null,
+          "colId": "arguments_1",
+          "pivot": false,
+          "width": 218,
+          "pinned": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "sortIndex": null,
+          "pivotIndex": null,
+          "rowGroupIndex": null
+        },
+        {
+          "flex": null,
+          "hide": true,
+          "sort": null,
+          "colId": "last_modified_by",
+          "pivot": false,
+          "width": 200,
+          "pinned": null,
+          "aggFunc": null,
+          "rowGroup": false,
+          "sortIndex": null,
+          "pivotIndex": null,
+          "rowGroupIndex": null
         }
       ],
       "autoSizeColumns": "fill"
