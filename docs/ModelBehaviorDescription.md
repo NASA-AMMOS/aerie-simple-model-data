@@ -31,16 +31,19 @@ been played back.
 ### ReprioritizeData(bin, newBin, volume)
 Re-prioritize data by moving the specified `volume` from `bin` to `newBin` immediately.
 
-## Bucket Rate Limits
+## Bucket Behavior
 The representation of data volumes is captured by a `Bucket` class.  This class is meant to be a generic container of
 amounts, not necessarily specific to data.  It is structured such that a parent bucket could have child buckets which
 are prioritized.  If the parent maximum volume is reached, and the child buckets are still receiving data, the highest
 priority bucket would continue to receive data, and data will be simultaneously deleted from the lowest priority bucket
-to give room for the higher priority data.
+to give room for the higher priority data.  This priority is also used to determine which data is played back during
+a `PlaybackData` activity.
 
-Buckets are limited to a maximum volume. If this volume is reached, higher priority buckets will continue to
-receive data at the specified rate while lower priority buckets will lose data volume to compensate.
-The data rates are computed from the desired data rates with the following relationship:
+Each bucket has its own maximum volume that may be specified directly by the user or computed based on its parent's max
+volume and current volume (which is the sum of its children's volumes. The max volume of both the parent and child can
+change over time.  If the parent bucket max volume is reached, higher priority buckets will continue to receive data at
+the desired rate as long as there is data to overwrite/delete from lower priority buckets to compensate.
+The actual data rates are computed from the desired data rates with the following relationship:
 
 $\text{If } \sum_{j \in C(P(i))} v_j < u_{P(i)}, \text{ then } u_i := u_{P(i)}. \text{ Otherwise, }$
 
@@ -64,12 +67,12 @@ $u'$ is the rate of change of the upper bound
 
 ## Example Plan
 
-The screenshot below demonstrates the behavior of the activities and bins as described above.
+The screenshot below demonstrates the behavior of the activities and buckets/bins as described above in a [sample plan](../sample-plan.json).
 
 A `ChangeDataGenerationRate` activity adds a slow rate into `scBin1`.  `GenerateData` activities add 6Gb
 to `scBin0` and 5Gb to `scBin1` over 6 hours.  These accumulate to hit the 10Gb max volume limit.
 A `PlaybackData` activity adds 100Mb to `gndBin0`  A `ReprioritizeData` activity recategorizes 0.5 Gb
 from `scBin0` to `scBin1`.  Another `ChangeDataGenerationRate` activity adds a continuing flow into `scBin1`
-causing data from `scBin1` to be deleted to mae room for the higher priority bin0 data.
+causing data from `scBin1` to be deleted to make room for the higher priority bin0 data.
 
 ![aerie screenshot](sample-plan.png)
