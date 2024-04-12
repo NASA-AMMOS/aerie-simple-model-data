@@ -2,7 +2,8 @@
 A reusable multi-mission model of data management for Aerie
 
 This repository provides a simple, configurable spacecraft data management model for use within the [Aerie framework](https://github.com/NASA-AMMOS/aerie). The data model includes basic components to represent a data storage device and categories of data, which can be optionally storage limited and represent types of data, folders, partitions, etc.
-See the [model behavior documentation](docs/ModelBehaviorDescription.md) for details of how data volumes are calculated.
+See the [model behavior documentation](docs/ModelBehaviorDescription.md) for a description of activities affecting data
+volumes and details of how data volumes are calculated in the presence of limits and priorities.
 
 ## Quick Start
 

@@ -10,7 +10,7 @@ import static gov.nasa.jpl.aerie.contrib.streamline.core.Resources.*;
 @ActivityType("DeleteData")
 public class DeleteData {
   /**
-   * The maximum volume to delete depending on {@link #limitToUnsentData} and the volume of the bin
+   * The maximum volume to delete depending on {@link #limitToSentData} and the volume of the bin
    */
   @Export.Parameter
   public double volume; // bits
@@ -19,7 +19,7 @@ public class DeleteData {
    * Whether to limit the amount deleted to that which has been downlinked
    */
   @Export.Parameter
-  public boolean limitToUnsentData = true;
+  public boolean limitToSentData = true;
 
   /**
    * The bin whose data is to be deleted
@@ -36,8 +36,9 @@ public class DeleteData {
     double currentVolume = currentValue(binToChange.volume);
     double MAX = Double.MAX_VALUE;
     double volumeNotYetDownlinked = groundBin == null ? MAX : (currentValue(binToChange.received) - currentValue(groundBin.received));
+    double volumeAlreadyDownlinked = currentValue(binToChange.volume) - volumeNotYetDownlinked;
     double actualVolumeDeleted =
-      Math.min(volume, Math.min(currentVolume, limitToUnsentData ? volumeNotYetDownlinked : MAX));
+      Math.min(volume, Math.min(currentVolume, limitToSentData ? volumeAlreadyDownlinked : MAX));
     System.out.println("DeleteData(" + currentTime() + "): actualVolumeDeleted = " + actualVolumeDeleted);
 
     binToChange.remove(actualVolumeDeleted);

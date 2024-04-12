@@ -50,7 +50,7 @@ public class Data {
     for (int i = 0; i < numBuckets; ++i) {
       Bucket scBin = new Bucket("scBin" + i, true, Collections.emptyList());
       onboardBuckets.add(scBin);
-      Bucket gBin = new Bucket("gBin" + i, true, Collections.emptyList());
+      Bucket gBin = new Bucket("gndBin" + i, true, Collections.emptyList());
       groundBuckets.add(gBin);
     }
 
