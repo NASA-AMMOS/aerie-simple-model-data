@@ -19,7 +19,7 @@ import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomi
 public class Mission implements DataMissionModel {
 
   // A resource specifying the spacecraft's data rate for playback to ground.
-  private final Resource<Polynomial> dataRate = polynomialResource(100); // 100 bps
+  private final Resource<Polynomial> dataRate = polynomialResource(10000); // 10 kbps
 
   // Two buckets/bins for the spacecraft and two for ground are created here by passing in 2.  The ground
   // bins track how much data has been played back/downloaded from the spacecraft.  The parent

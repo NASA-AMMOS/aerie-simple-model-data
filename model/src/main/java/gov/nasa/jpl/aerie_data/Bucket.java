@@ -219,6 +219,7 @@ public class Bucket {
    */
   public void receive(double rate, Duration duration) {
     if (duration.isEqualTo(Duration.ZERO)) return; // TODO -- warning?
+    if (rate == 0) return;
     if (rate > 0) {
       restore((MutableResource<Polynomial>) desiredReceiveRate, rate);
       delay(duration);
@@ -236,6 +237,7 @@ public class Bucket {
    */
   public void remove(double rate, Duration duration) {
     if (duration.isEqualTo(Duration.ZERO)) return; // TODO -- warning?
+    if (rate == 0) return;
     if (rate > 0) {
       restore((MutableResource<Polynomial>) desiredRemoveRate, rate);
       delay(duration);
