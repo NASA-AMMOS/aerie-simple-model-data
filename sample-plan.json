@@ -1,0 +1,124 @@
+{
+  "name": "pmmm2024-04-12T01-51-27",
+  "start_time": "2024-04-12T00:00:00+00:00",
+  "end_time": "2024-04-13T00:00:00+00:00",
+  "id": 8,
+  "model_id": 6,
+  "sim_id": 8,
+  "activities": [
+    {
+      "type": "ChangeDataGenerationRate",
+      "metadata": {},
+      "name": "ChangeDataGenerationRate",
+      "arguments": {
+        "bin": 1,
+        "rate": 10000
+      },
+      "anchor_id": null,
+      "anchored_to_start": true,
+      "start_offset": "1:00:00",
+      "id": 16
+    },
+    {
+      "type": "GenerateData",
+      "metadata": {},
+      "name": "GenerateData",
+      "arguments": {
+        "rate": {
+          "value": 0,
+          "present": false
+        },
+        "volume": {
+          "value": 6000000000,
+          "present": true
+        },
+        "duration": {
+          "value": 21600000000,
+          "present": true
+        }
+      },
+      "anchor_id": null,
+      "anchored_to_start": true,
+      "start_offset": "7:00:00",
+      "id": 20
+    },
+    {
+      "type": "PlaybackData",
+      "metadata": {},
+      "name": "PlaybackData",
+      "arguments": {
+        "duration": {
+          "value": 10800000000,
+          "present": true
+        }
+      },
+      "anchor_id": null,
+      "anchored_to_start": true,
+      "start_offset": "8:30:00",
+      "id": 17
+    },
+    {
+      "type": "GenerateData",
+      "metadata": {},
+      "name": "GenerateData",
+      "arguments": {
+        "bin": 1,
+        "rate": {
+          "value": 0,
+          "present": false
+        },
+        "volume": {
+          "value": 5000000000,
+          "present": true
+        },
+        "duration": {
+          "value": 21600000000,
+          "present": true
+        }
+      },
+      "anchor_id": null,
+      "anchored_to_start": true,
+      "start_offset": "10:00:00",
+      "id": 22
+    },
+    {
+      "type": "ReprioritizeData",
+      "metadata": {},
+      "name": "ReprioritizeData",
+      "arguments": {
+        "volume": 500000000
+      },
+      "anchor_id": null,
+      "anchored_to_start": true,
+      "start_offset": "12:06:31.836000",
+      "id": 18
+    },
+    {
+      "type": "DeleteData",
+      "metadata": {},
+      "name": "DeleteData",
+      "arguments": {
+        "bin": 0,
+        "volume": 20000000,
+        "limitToSentData": true
+      },
+      "anchor_id": null,
+      "anchored_to_start": true,
+      "start_offset": "15:31:37.959000",
+      "id": 21
+    },
+    {
+      "type": "ChangeDataGenerationRate",
+      "metadata": {},
+      "name": "ChangeDataGenerationRate",
+      "arguments": {
+        "bin": 0,
+        "rate": 100000
+      },
+      "anchor_id": null,
+      "anchored_to_start": true,
+      "start_offset": "18:36:44.081000",
+      "id": 19
+    }
+  ]
+}
