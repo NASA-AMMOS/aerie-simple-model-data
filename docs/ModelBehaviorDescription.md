@@ -61,3 +61,15 @@ $d$ is the desired rate \
 $v$ is the actual rate \
 $u$ is the upper bound \
 $u'$ is the rate of change of the upper bound
+
+## Example Plan
+
+The screenshot below demonstrates the behavior of the activities and bins as described above.
+
+A `ChangeDataGenerationRate` activity adds a slow rate into `scBin1`.  `GenerateData` activities add 6Gb
+to `scBin0` and 5Gb to `scBin1` over 6 hours.  These accumulate to hit the 10Gb max volume limit.
+A `PlaybackData` activity adds 100Mb to `gndBin0`  A `ReprioritizeData` activity recategorizes 0.5 Gb
+from `scBin0` to `scBin1`.  Another `ChangeDataGenerationRate` activity adds a continuing flow into `scBin1`
+causing data from `scBin1` to be deleted to mae room for the higher priority bin0 data.
+
+![aerie screenshot](sample-plan.png)

@@ -11,9 +11,9 @@ Interested in giving the data model a quick spin? We've pre-built a very simple 
 
 Once you have loaded [demo.jar](demo.jar) into Aerie, make a plan with a time range of your choosing (a plan length of a day should be reasonable). Once you have created a plan, add a couple of activities to it and hit the simulate button. Once the simulation completes you should see a green check appear next to the Simulation icon, and viola, you have successfully run the data model!
 
-To actually see the results of the simulation you ran, you can load a pre-built [basic data model view](DataModelBasicView.json) that will place a number of different resources on to the timeline for named buckets of data.
+Alternatively, you can follow instructions for [loading a sample plan](#loading-a-sample-plan).
 
-There are number of configuration variables available in the "Simulation" pane that you can adjust to produce different behavior with the data model. Feel free to play around with these configurations and re-simulate to see how the results change.
+To actually see the results of the simulation you ran, you can load a pre-built [basic data model view](DataModelBasicView.json) that will place a number of different resources on to the timeline for named buckets of data.
 
 ## Organization
 
@@ -74,3 +74,21 @@ To run unit tests under [./src/test](./src/test), you can enter:
 ./gradlew test
 ```
 
+## Loading a Sample Plan
+
+You can use a command line tool for aerie to upload a sample plan.  Follow the instructions at
+https://github.com/NASA-AMMOS/aerie-cli to install and try out aerie-cli.  Before uploading a plan,
+get the model id of the mission model jar that you uploaded.  Then upload the included
+[sample-plan.json](sample-plan.json), issue the following command replacing "1" with the
+mission model id you found:
+```sh
+aerie-cli plans upload -i sample-plan.json -m 1 --time-tag
+```
+The `--time-tag` option adds a timestamp to the plan name so that multiple uploads don't try to reuse the same name,
+which causes and error.
+
+You can then simulate and view with the [basic data model view](DataModelBasicView.json), assuming that you have
+already uploaded it as described in the [Quick Start](#quick-start) section above.  And you should then see the
+simulation results below:
+
+![aerie screenshot](docs/sample-plan.png)
