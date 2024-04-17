@@ -44,7 +44,7 @@
                       "GenerateData",
                       "PlaybackData",
                       "ReprioritizeData",
-                      "SetDataRate",
+                      "SetPlaybackDataRate",
                       "SetMaxVolume"
                     ]
                   }

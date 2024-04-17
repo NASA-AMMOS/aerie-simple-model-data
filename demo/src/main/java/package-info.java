@@ -9,7 +9,7 @@
 @MissionModel.WithActivityType(PlaybackData.class)
 @MissionModel.WithActivityType(ReprioritizeData.class)
 
-@MissionModel.WithActivityType(SetDataRate.class)
+@MissionModel.WithActivityType(SetPlaybackDataRate.class)
 @MissionModel.WithActivityType(SetMaxVolume.class)
 
 package demosystem;

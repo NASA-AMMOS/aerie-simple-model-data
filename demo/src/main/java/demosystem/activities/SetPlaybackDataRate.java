@@ -5,8 +5,8 @@ import gov.nasa.jpl.aerie.merlin.framework.annotations.ActivityType;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.Export;
 import static gov.nasa.jpl.aerie.contrib.streamline.modeling.discrete.DiscreteEffects.set;
 
-@ActivityType("SetDataRate")
-public class SetDataRate {
+@ActivityType("SetPlaybackDataRate")
+public class SetPlaybackDataRate {
   /**
    * The new data rate value
    */

@@ -82,9 +82,9 @@
       "id": 39
     },
     {
-      "type": "SetDataRate",
+      "type": "SetPlaybackDataRate",
       "metadata": {},
-      "name": "SetDataRate",
+      "name": "SetPlaybackDataRate",
       "arguments": {
         "rate": 30000
       },

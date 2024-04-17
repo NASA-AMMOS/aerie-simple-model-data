@@ -39,7 +39,7 @@ activities for changing the playback datarate and the maximum volume of the spac
 [Data](../model/src/main/java/gov/nasa/jpl/aerie_data/Data.java) class interface since they may be defined differently
 for different missions.
 
-### SetDataRate(rate)
+### SetPlaybackDataRate(rate)
 Changes the playback datarate to the specified rate immediately.
 
 ### SetMaxVolume(volume)
@@ -86,7 +86,7 @@ The screenshot below demonstrates the behavior of the activities and buckets/bin
 
 A `ChangeDataGenerationRate` activity adds a slow rate into `scBin1`.  `GenerateData` activities add 6Gb
 to `scBin0` and 5Gb to `scBin1` over 6 hours.  These accumulate to hit the 10Gb max volume limit.
-A `PlaybackData` activity adds data to `gndBin0` over 3 hours, during which a `SetDataRate` activity triples
+A `PlaybackData` activity adds data to `gndBin0` over 3 hours, during which a `SetPlaybackDataRate` activity triples
 the playback datarate.  A `ReprioritizeData` activity recategorizes 0.5 Gb
 from `scBin0` to `scBin1`.  Another `ChangeDataGenerationRate` activity adds a continuing flow into `scBin1`
 causing data from `scBin1` to be deleted to make room for the higher priority bin0 data.  Lastly, a `SetMaxVolume`
