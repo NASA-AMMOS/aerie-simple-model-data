@@ -7,7 +7,7 @@ The ground bins track the data that has been played back for each bin.
 A number of activities are used to specify the inflow of data to the bins, the playback of that data to ground, the
 deletion of data, and moving data from one bin to another.
 
-## Activities
+## Data Model Activities
 
 ### ChangeDataGenerationRate(bin, rate)
 This activity specifies a never-ending flow of data into an onboard bin at a specified rate.
@@ -30,6 +30,21 @@ been played back.
 
 ### ReprioritizeData(bin, newBin, volume)
 Re-prioritize data by moving the specified `volume` from `bin` to `newBin` immediately.
+
+## Demo Model Activities
+
+This repository is divided into a `model` module, which is meant to be re-used in different mission models, and a `demo`
+module, which demonstrates how a mission model can use the data model package.  The `demo` module has two of its own
+activities for changing the playback datarate and the maximum volume of the spacecraft.  These two resources are passed into the
+[Data](../model/src/main/java/gov/nasa/jpl/aerie_data/Data.java) class interface since they may be defined differently
+for different missions.
+
+### SetDataRate(rate)
+Changes the playback datarate to the specified rate immediately.
+
+### SetMaxVolume(volume)
+Changes the max storage volume to the specified volume immediately.
+
 
 ## Bucket Behavior
 The representation of data volumes is captured by a `Bucket` class.  This class is meant to be a generic container of
@@ -71,8 +86,11 @@ The screenshot below demonstrates the behavior of the activities and buckets/bin
 
 A `ChangeDataGenerationRate` activity adds a slow rate into `scBin1`.  `GenerateData` activities add 6Gb
 to `scBin0` and 5Gb to `scBin1` over 6 hours.  These accumulate to hit the 10Gb max volume limit.
-A `PlaybackData` activity adds 100Mb to `gndBin0`  A `ReprioritizeData` activity recategorizes 0.5 Gb
+A `PlaybackData` activity adds data to `gndBin0` over 3 hours, during which a `SetDataRate` activity triples
+the playback datarate.  A `ReprioritizeData` activity recategorizes 0.5 Gb
 from `scBin0` to `scBin1`.  Another `ChangeDataGenerationRate` activity adds a continuing flow into `scBin1`
-causing data from `scBin1` to be deleted to make room for the higher priority bin0 data.
+causing data from `scBin1` to be deleted to make room for the higher priority bin0 data.  Lastly, a `SetMaxVolume`
+activity reduces the storage capacity by 2 Gb, and since the storage was full at 10 Gb, it immediately deletes
+2 Gb of lower priority data in `scBin1`.
 
 ![aerie screenshot](sample-plan.png)

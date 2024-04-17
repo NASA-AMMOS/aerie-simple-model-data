@@ -1,13 +1,16 @@
 package demosystem;
 
+import gov.nasa.jpl.aerie.contrib.streamline.core.MutableResource;
 import gov.nasa.jpl.aerie.contrib.streamline.core.Resource;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.Registrar;
+import gov.nasa.jpl.aerie.contrib.streamline.modeling.discrete.Discrete;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomial;
 import gov.nasa.jpl.aerie_data.Data;
 import gov.nasa.jpl.aerie_data.DataMissionModel;
 
 import java.util.Optional;
 
+import static gov.nasa.jpl.aerie.contrib.streamline.modeling.discrete.DiscreteResources.discreteResource;
 import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.PolynomialResources.*;
 
 /**
@@ -18,16 +21,32 @@ import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomi
  */
 public class Mission implements DataMissionModel {
 
-  // A resource specifying the spacecraft's data rate for playback to ground.
-  private final Resource<Polynomial> dataRate = polynomialResource(10000); // 10 kbps
+  /**
+   * A resource specifying the spacecraft's data rate for playback to ground in bits per second.
+   */
+  public final MutableResource<Discrete<Double>> dataRate; // bps
 
-  // Two buckets/bins for the spacecraft and two for ground are created here by passing in 2.  The ground
-  // bins track how much data has been played back/downloaded from the spacecraft.  The parent
-  // bucket has a limit of 10Gb.  bin0 is higher priority than bin 1.
-  public Data data = new Data(Optional.of(dataRate), 2, constant(1e10));
+  /**
+   * This is a cap on the spacecraft's data storage.
+   */
+  public final MutableResource<Discrete<Double>> maxVolune; // bits
+
+  /**
+   * This is the interface to data Buckets and corresponding resources from the model package.
+   */
+  public Data data;
 
   public Mission(gov.nasa.jpl.aerie.merlin.framework.Registrar registrar, Configuration config) {
     Registrar newRegistrar = new Registrar(registrar, Registrar.ErrorBehavior.Throw);
+
+    this.dataRate = discreteResource(config.initialDatarate()); // bps
+    this.maxVolune = discreteResource(config.initialMaxVolume()); // bits
+
+    // Two buckets/bins for the spacecraft and two for ground are created here by passing in 2 below.
+    // The ground bins track how much data has been played back/downloaded from the spacecraft.
+    // bin0 is higher priority than bin 1.
+    // The parent bucket has a limit of 10Gb (by default from the Configuration).
+    this.data = new Data(Optional.of(asPolynomial(dataRate)), 2, asPolynomial(maxVolune));
     data.registerStates(newRegistrar);
   }
 

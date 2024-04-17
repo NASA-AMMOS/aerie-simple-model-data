@@ -18,34 +18,77 @@ import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomi
 import static gov.nasa.jpl.aerie.merlin.framework.ModelActions.spawn;
 
 
+/**
+ * The Data class is the main interface for using the data model.  A mission model can construct a Data object
+ * containing data volume bins and the parent storage with the storage limit.  See the
+ * [Model Behavior Description]({@docRoot}/docs/ModelBehaviorDesc.md) for a description of how {@link Bucket}
+ * (bin) resources are updated.  That functionality is implemented by this class.  This class also automatically
+ * registers resources for the bins.
+ */
 public class Data {
   public static LinearBoundaryConsistencySolver rateSolver = new LinearBoundaryConsistencySolver("DataModel Rate Solver");
 
   /**
-   * Specifies onboard and ground buckets
+   * The onboard storage device of the spacecraft, a parent of the bins, {@link #onboardBuckets}.
    */
-
   public Bucket onboard;
 
+  /**
+   * The parent container for ground storage, representing the data that has been played back/downlinked overall
+   * and for each bin through its children, {@link #groundBuckets}.
+   */
   public Bucket ground;
 
+  /**
+   * A playbackdatarate resource provided by the user; if unspecified in the Data constructor,
+   * a default value will be used.
+   */
   public Resource<Polynomial> dataRate;  // bps
+
+  /**
+   * When a {@link gov.nasa.jpl.aerie_data.activities.PlaybackData} activity has a volume goal, this resource tracks
+   * how much volume is left before the goal has been met.
+   */
   public MutableResource<Polynomial> volumeRequestedToDownlink = polynomialResource(0.0);
+
+  /**
+   * When a {@link gov.nasa.jpl.aerie_data.activities.PlaybackData} activity has a duration goal, this resource tracks
+   * how much time is left before the goal has been met.
+   */
   public MutableResource<Polynomial> durationRequestedToDownlink = polynomialResource(0.0);
 
+  /**
+   * The storage bins/categories, which are children of {@link #onboard}.  Lower indices in the array are higher priority
+   */
   public ArrayList<Bucket> onboardBuckets = new ArrayList<>();
 
+  /**
+   * The ground storage bins corresponding to the onboard bins, tracking how much data has been downlinked for each bin
+   */
   public ArrayList<Bucket> groundBuckets = new ArrayList<>();
 
+  /**
+   * Get the onboard bin by index, starting from 0
+   */
   public Bucket getOnboardBin(int bin) {
     return onboardBuckets.get(bin);
   }
 
+  /**
+   * Get the ground bin by index, starting from 0
+   */
   public Bucket getGroundBin(int bin) {
     return groundBuckets.get(bin);
   }
 
-  public Data(Optional<Resource<Polynomial>> dataRate, int numBuckets, Resource<Polynomial> upperBound) {
+  /**
+   * Construct a Data object, instantiating a specified number of onboard and corresponding ground bins and
+   * using an externally defined data rate and storage limit (max volume) for the total onboard storage.
+   * @param dataRate the data rate resource, specified external to the data model, such as by a telecom subsystem model
+   * @param numBuckets the number of prioritized bins/categories of data
+   * @param maxVolume the onboard storage limit as a resource that is defined set external to the data model
+   */
+  public Data(Optional<Resource<Polynomial>> dataRate, int numBuckets, Resource<Polynomial> maxVolume) {
 
     for (int i = 0; i < numBuckets; ++i) {
       Bucket scBin = new Bucket("scBin" + i, true, Collections.emptyList());
@@ -54,7 +97,7 @@ public class Data {
       groundBuckets.add(gBin);
     }
 
-    onboard = new Bucket("onboard", false, onboardBuckets, upperBound); // 10Gb
+    onboard = new Bucket("onboard", false, onboardBuckets, maxVolume); // 10Gb
 
     ground = new Bucket("ground", false, groundBuckets);
 
@@ -95,6 +138,10 @@ public class Data {
     });
   }
 
+  /**
+   * Register bin and other resources with Aerie to record them in the simulation results and see them in the UI.
+   * @param registrar the built-in Registrar object used to register resources
+   */
   public void registerStates(Registrar registrar) {
     onboard.registerStates(registrar);
     ground.registerStates(registrar);

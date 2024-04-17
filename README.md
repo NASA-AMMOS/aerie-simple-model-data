@@ -4,6 +4,7 @@ A reusable multi-mission model of data management for Aerie
 This repository provides a simple, configurable spacecraft data management model for use within the [Aerie framework](https://github.com/NASA-AMMOS/aerie). The data model includes basic components to represent a data storage device and categories of data, which can be optionally storage limited and represent types of data, folders, partitions, etc.
 See the [model behavior documentation](docs/ModelBehaviorDescription.md) for a description of activities affecting data
 volumes and details of how data volumes are calculated in the presence of limits and priorities.
+For example, if the total storage limit is reached, lower priority data will be deleted as higher priority data is collected.
 
 ## Quick Start
 
@@ -26,13 +27,13 @@ The following instructions assume that you are using MacOS, but the instructions
 
   ```sh
   brew tap homebrew/cask-versions
-  brew install --cask temurin19
+  brew install --cask temurin21
   ```
 
   Make sure you update your `JAVA_HOME` environment variable. For example with [Zsh](https://www.zsh.org/) you can update your `.zshrc` with:
 
   ```sh
-  export JAVA_HOME="/Library/Java/JavaVirtualMachines/temurin-19.jdk/Contents/Home"
+  export JAVA_HOME="/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home"
   ```
 
 - Ensure you have docker installed on your machine. If you do not, install it [here](https://docs.docker.com/desktop/).

@@ -1,10 +1,10 @@
 {
-  "name": "sample-plan",
+  "name": "sample-plan2024-04-17T18-37-07",
   "start_time": "2024-04-12T00:00:00+00:00",
   "end_time": "2024-04-13T00:00:00+00:00",
-  "id": 8,
-  "model_id": 6,
-  "sim_id": 8,
+  "id": 14,
+  "model_id": 8,
+  "sim_id": 12,
   "activities": [
     {
       "type": "ChangeDataGenerationRate",
@@ -17,7 +17,7 @@
       "anchor_id": null,
       "anchored_to_start": true,
       "start_offset": "1:00:00",
-      "id": 16
+      "id": 33
     },
     {
       "type": "GenerateData",
@@ -40,7 +40,7 @@
       "anchor_id": null,
       "anchored_to_start": true,
       "start_offset": "7:00:00",
-      "id": 20
+      "id": 37
     },
     {
       "type": "PlaybackData",
@@ -55,7 +55,7 @@
       "anchor_id": null,
       "anchored_to_start": true,
       "start_offset": "8:30:00",
-      "id": 17
+      "id": 34
     },
     {
       "type": "GenerateData",
@@ -79,7 +79,19 @@
       "anchor_id": null,
       "anchored_to_start": true,
       "start_offset": "10:00:00",
-      "id": 22
+      "id": 39
+    },
+    {
+      "type": "SetDataRate",
+      "metadata": {},
+      "name": "SetDataRate",
+      "arguments": {
+        "rate": 30000
+      },
+      "anchor_id": null,
+      "anchored_to_start": true,
+      "start_offset": "11:00:00",
+      "id": 35
     },
     {
       "type": "ReprioritizeData",
@@ -91,7 +103,7 @@
       "anchor_id": null,
       "anchored_to_start": true,
       "start_offset": "12:06:31.836000",
-      "id": 18
+      "id": 38
     },
     {
       "type": "DeleteData",
@@ -105,7 +117,7 @@
       "anchor_id": null,
       "anchored_to_start": true,
       "start_offset": "15:31:37.959000",
-      "id": 21
+      "id": 36
     },
     {
       "type": "ChangeDataGenerationRate",
@@ -117,8 +129,20 @@
       },
       "anchor_id": null,
       "anchored_to_start": true,
-      "start_offset": "18:36:44.081000",
-      "id": 19
+      "start_offset": "18:30:00",
+      "id": 40
+    },
+    {
+      "type": "SetMaxVolume",
+      "metadata": {},
+      "name": "SetMaxVolume",
+      "arguments": {
+        "volume": 8000000000
+      },
+      "anchor_id": null,
+      "anchored_to_start": true,
+      "start_offset": "20:30:00",
+      "id": 41
     }
   ]
 }

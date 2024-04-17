@@ -131,6 +131,8 @@ public class Bucket {
 
     this.children = children;
 
+    // The code below uses a built-in arc-consistency solver (LinearBoundaryConsistencySolver) and forward()
+    // in order to handle cyclic dependencies among parent and child Buckets.
     LinearBoundaryConsistencySolver.LinearExpression sumExpr = null;
     for (int i = 0; i < this.children.size(); ++i) {  // TODO -- what if a child has children?
       Bucket child = this.children.get(i);
