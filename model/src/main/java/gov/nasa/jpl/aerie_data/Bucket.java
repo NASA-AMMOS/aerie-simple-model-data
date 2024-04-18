@@ -138,11 +138,13 @@ public class Bucket {
       Bucket child = this.children.get(i);
       var rate = rateSolver.variable("rate " + child.name, LinearBoundaryConsistencySolver.Domain::upperBound);
       child.actualRate = rate.resource();
-      if (i == 0) {
-        child.volume_ub = child.volume_ub.equals(max_bound) ? volume_ub : min(child.volume_ub, volume_ub);
-      } else {
-        var child_volume_ub = subtract(children.get(i - 1).volume_ub, children.get(i - 1).clampedVolume);
-        child.volume_ub = child.volume_ub.equals(max_bound) ? child_volume_ub : min(child.volume_ub, child_volume_ub);
+      if (!volume_ub.equals(max_bound)) {
+        if (i == 0) {
+          child.volume_ub = child.volume_ub.equals(max_bound) ? volume_ub : min(child.volume_ub, volume_ub);
+        } else {
+          var child_volume_ub = subtract(children.get(i - 1).volume_ub, children.get(i - 1).clampedVolume);
+          child.volume_ub = child.volume_ub.equals(max_bound) ? child_volume_ub : min(child.volume_ub, child_volume_ub);
+        }
       }
       child.clampedVolume = clamp(child.volume, constant(0), child.volume_ub);
       child.correctedVolume = map(child.clampedVolume, child.actualRate, (v, r) -> r.integral(v.extract()));
@@ -207,7 +209,9 @@ public class Bucket {
     registrar.real(name + ".volume", assumeLinear(volume));
     if (clampedVolume != null) registrar.real(name + ".clampedVolume", assumeLinear(clampedVolume));
     if (correctedVolume != null) registrar.real(name + ".correctedVolume", assumeLinear(correctedVolume));
-    registrar.real(name + ".maxVolume", assumeLinear(volume_ub));
+    if (!volume_ub.equals(max_bound)) {
+      registrar.real(name + ".maxVolume", assumeLinear(volume_ub));
+    }
     for (Bucket child : this.children) {
       child.registerStates(registrar);
     }
