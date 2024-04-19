@@ -133,11 +133,16 @@ public class Bucket {
 
     // The code below uses a built-in arc-consistency solver (LinearBoundaryConsistencySolver) and forward()
     // in order to handle cyclic dependencies among parent and child Buckets.
+    // This is based on DataModel.java in the contrib module of Aerie.
     LinearBoundaryConsistencySolver.LinearExpression sumExpr = null;
     for (int i = 0; i < this.children.size(); ++i) {  // TODO -- what if a child has children?
       Bucket child = this.children.get(i);
+
+      // actualRates of the children are the output of the solver
       var rate = rateSolver.variable("rate " + child.name, LinearBoundaryConsistencySolver.Domain::upperBound);
       child.actualRate = rate.resource();
+
+      // define volume upper bounds
       if (!volume_ub.equals(max_bound)) {
         if (i == 0) {
           child.volume_ub = child.volume_ub.equals(max_bound) ? volume_ub : min(child.volume_ub, volume_ub);
@@ -146,33 +151,51 @@ public class Bucket {
           child.volume_ub = child.volume_ub.equals(max_bound) ? child_volume_ub : min(child.volume_ub, child_volume_ub);
         }
       }
+
+      // define volume as the integration of the actualRate, but bound by clamps
       child.clampedVolume = clamp(child.volume, constant(0), child.volume_ub);
       child.correctedVolume = map(child.clampedVolume, child.actualRate, (v, r) -> r.integral(v.extract()));
+      // forward() handles cyclic dependencies by updating the volume repeatedly until it converges (right?)
       forward(eraseExpiry(child.correctedVolume), (MutableResource<Polynomial>) child.volume);
 
+      // build up an expression for the solver that sums the children's rates
       if (sumExpr == null) sumExpr = lx(rate);
       else sumExpr = sumExpr.add(lx(rate));
 
+      // define the desired rate
       child.desiredRate = subtract(child.desiredReceiveRate, child.desiredRemoveRate);
+      // Can't get more than the desired rate unless the desired rate is negative and the bucket is empty
+      // solver constraint for the upper bound on the rate based on whether volume is zero:
+      //     actualRate <= isEmpty ? max(desiredRate, 0) : desiredRate
       var isEmpty = lessThanOrEquals(child.volume, 0);
       var rate_ub = choose(isEmpty, max(child.desiredRate, constant(0)), child.desiredRate);
       rateSolver.declare(lx(rate), LessThanOrEquals, lx(rate_ub));
 
+      // Don't delete if there's nothing to delete, otherwise deleting is unlimited
+      // solver constraint for the lower bound on the rate based on whether volume is zero:
+      //     actualRate >= isEmpty ? 0 : -Double.MAX_VALUE
       var rate_lb = choose(isEmpty, constant(0), constant(-Double.MAX_VALUE));
       rateSolver.declare(lx(rate), GreaterThanOrEquals, lx(rate_lb));
+
       child.finishInit();
     }
+
+    // resources and solver constraints for parent Buckets
     if (!this.children.isEmpty()) {
       // When full, we never write more than the upper bound will tolerate, in total
       var totalVolume = sum(children.stream().map(b -> b.volume));
       var isFull = greaterThanOrEquals(totalVolume, volume_ub);
       var totalRate_ub = choose(isFull, differentiate(volume_ub), constant(Double.MAX_VALUE));
+      // solver constraint:  totalOfChildActualRates <= isFull ? differentiate(volume_ub) : Double.MAX_VALUE
       rateSolver.declare(sumExpr, LessThanOrEquals, lx(totalRate_ub));
+
+      // resources as the sum of the children's
       this.volume = totalVolume;
       actualRate = sum(children.stream().map(b -> b.actualRate));
       desiredReceiveRate = sum(children.stream().map(b -> b.desiredReceiveRate));
       desiredRemoveRate = sum(children.stream().map(b -> b.desiredRemoveRate));
     }
+    // finish initialization of top-level parent after children
     if (!isChild) {
       finishInit();
     }
@@ -182,13 +205,21 @@ public class Bucket {
    * A part of the initialization done at different times for the parent and children since they are codependent
    */
   public void finishInit() {
+    // make sure desiredRate is defined
     if (desiredRate == null) desiredRate = subtract(desiredReceiveRate, desiredRemoveRate);
+
+    // keep track of how much would be received and how much would be deleted if there were no bounds
     desiredReceived = map(desiredReceiveRate, r -> r.integral(0.0));
     desiredRemoved = map(desiredRemoveRate, r -> r.integral(0.0));
 
+    // make sure actualRate is defined
     if (actualRate == null) actualRate = desiredRate;
+
+    // define actual receive and remove rates
     receiveRate = subtract(desiredReceiveRate, max(subtract(desiredRate, actualRate), constant(0.0)));
     removeRate = subtract(desiredRemoveRate, max(subtract(actualRate, desiredRate), constant(0.0)));
+
+    // define actual total volume received and actual total volume removed
     wheneverDynamicsChange(receiveRate, r -> MutableResource.set(received, polynomial(currentValue(received), data(r).extract())));
     wheneverDynamicsChange(removeRate, r -> MutableResource.set(removed, polynomial(currentValue(removed), data(r).extract())));
   }

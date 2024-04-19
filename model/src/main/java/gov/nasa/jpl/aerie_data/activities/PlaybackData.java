@@ -1,7 +1,6 @@
 package gov.nasa.jpl.aerie_data.activities;
 
 import gov.nasa.jpl.aerie.contrib.streamline.core.Resource;
-import gov.nasa.jpl.aerie.contrib.streamline.core.Resources;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomial;
 import gov.nasa.jpl.aerie.merlin.framework.Condition;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.ActivityType;
@@ -39,17 +38,15 @@ public class PlaybackData {
     }
 
     final var targetGroundReceivedValue = volume.isEmpty() ? Double.MAX_VALUE : currentValue(ground.received) + volume.get();
-    System.out.println("PlaybackData(" + Resources.currentTime() + "): targetGroundReceivedValue = " + targetGroundReceivedValue);
     if (volume.isPresent()) {
       restore(model.getData().volumeRequestedToDownlink, volume.get());
     }
     if (duration.isPresent()) {
       set(model.getData().durationRequestedToDownlink, Polynomial.polynomial(duration.get().in(Duration.SECONDS), -1));
     }
-    //waitUntil(when(greaterThanOrEquals(model.getData().ground.received, targetGroundReceivedValue)));  // This creates a cell and dies!
     waitUntil(Condition.and(
-      volume.isEmpty() ? Condition.TRUE : isBetween(ground.received, targetGroundReceivedValue, targetGroundReceivedValue * 2), //Double.MAX_VALUE),
-      duration.isEmpty() ? Condition.TRUE : isBetween(model.getData().durationRequestedToDownlink, -2.0, 0)));  // -Double.MAX_VALUE
+      volume.isEmpty() ? Condition.TRUE : isBetween(ground.received, targetGroundReceivedValue, targetGroundReceivedValue * 2),
+      duration.isEmpty() ? Condition.TRUE : isBetween(model.getData().durationRequestedToDownlink, -2.0, 0)));
     if (volume.isPresent()) {
       set(model.getData().volumeRequestedToDownlink, Polynomial.polynomial(0, 0));
     }

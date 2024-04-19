@@ -35,8 +35,6 @@ public class ChangeDataGenerationRate {
     if (rate == 0.0) return;
     var binToChange = data.getOnboardBin(bin);
 
-    System.out.println("ChangeDataGenerationRate(" + Resources.currentTime() + "): rate = " + rate);
-
     if (rate > 0) {
       set((MutableResource<Polynomial>)binToChange.desiredReceiveRate, polynomial(rate));
       set((MutableResource<Polynomial>)binToChange.desiredRemoveRate, polynomial(0));

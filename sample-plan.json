@@ -1,10 +1,10 @@
 {
-  "name": "sample-plan2024-04-17T18-37-07",
+  "name": "sample-plan2024-04-17T18-37-072024-04-19T00-13-39",
   "start_time": "2024-04-12T00:00:00+00:00",
   "end_time": "2024-04-13T00:00:00+00:00",
-  "id": 14,
-  "model_id": 8,
-  "sim_id": 12,
+  "id": 26,
+  "model_id": 20,
+  "sim_id": 23,
   "activities": [
     {
       "type": "ChangeDataGenerationRate",
@@ -17,7 +17,7 @@
       "anchor_id": null,
       "anchored_to_start": true,
       "start_offset": "1:00:00",
-      "id": 33
+      "id": 107
     },
     {
       "type": "GenerateData",
@@ -40,7 +40,7 @@
       "anchor_id": null,
       "anchored_to_start": true,
       "start_offset": "7:00:00",
-      "id": 37
+      "id": 112
     },
     {
       "type": "PlaybackData",
@@ -55,7 +55,7 @@
       "anchor_id": null,
       "anchored_to_start": true,
       "start_offset": "8:30:00",
-      "id": 34
+      "id": 108
     },
     {
       "type": "GenerateData",
@@ -79,7 +79,7 @@
       "anchor_id": null,
       "anchored_to_start": true,
       "start_offset": "10:00:00",
-      "id": 39
+      "id": 114
     },
     {
       "type": "SetPlaybackDataRate",
@@ -91,7 +91,7 @@
       "anchor_id": null,
       "anchored_to_start": true,
       "start_offset": "11:00:00",
-      "id": 35
+      "id": 109
     },
     {
       "type": "ReprioritizeData",
@@ -102,8 +102,8 @@
       },
       "anchor_id": null,
       "anchored_to_start": true,
-      "start_offset": "12:06:31.836000",
-      "id": 38
+      "start_offset": "12:00:00",
+      "id": 113
     },
     {
       "type": "DeleteData",
@@ -111,13 +111,13 @@
       "name": "DeleteData",
       "arguments": {
         "bin": 0,
-        "volume": 20000000,
-        "limitToSentData": true
+        "volume": 400000000,
+        "limitToSentData": false
       },
       "anchor_id": null,
       "anchored_to_start": true,
-      "start_offset": "15:31:37.959000",
-      "id": 36
+      "start_offset": "15:30:00",
+      "id": 110
     },
     {
       "type": "ChangeDataGenerationRate",
@@ -130,7 +130,7 @@
       "anchor_id": null,
       "anchored_to_start": true,
       "start_offset": "18:30:00",
-      "id": 40
+      "id": 115
     },
     {
       "type": "SetMaxVolume",
@@ -142,7 +142,7 @@
       "anchor_id": null,
       "anchored_to_start": true,
       "start_offset": "20:30:00",
-      "id": 41
+      "id": 111
     }
   ]
 }

@@ -106,10 +106,12 @@ public class Data {
     } else {
       this.dataRate = polynomialResource(1.0);
     }
+
+    // Create resources to help determine when to stop PlaybackData activities: volumeRequestedToDownlink, durationRequestedForDownlink
     var done = and(lessThanOrEquals(volumeRequestedToDownlink, 0),
       lessThanOrEquals(durationRequestedToDownlink, 0));
     Resource<Polynomial> downlinkRateLeft = choose(done, constant(0), this.dataRate);
-    ArrayList<Resource<Polynomial>> actualDownlinkRates = new ArrayList<>();//(model.getData().onboard.children.size());
+    ArrayList<Resource<Polynomial>> actualDownlinkRates = new ArrayList<>();
     for (int i = 0; i < onboard.children.size(); ++i) {
       Bucket scBin = onboard.children.get(i);
       Bucket gBin = ground.children.get(i);

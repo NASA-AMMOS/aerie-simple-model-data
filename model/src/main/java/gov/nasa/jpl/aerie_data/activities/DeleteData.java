@@ -6,6 +6,7 @@ import gov.nasa.jpl.aerie_data.Data;
 import gov.nasa.jpl.aerie_data.DataMissionModel;
 
 import static gov.nasa.jpl.aerie.contrib.streamline.core.Resources.*;
+import static java.lang.Math.max;
 
 @ActivityType("DeleteData")
 public class DeleteData {
@@ -35,15 +36,13 @@ public class DeleteData {
 
     double currentVolume = currentValue(binToChange.volume);
     double MAX = Double.MAX_VALUE;
-    double volumeNotYetDownlinked = groundBin == null ? MAX : (currentValue(binToChange.received) - currentValue(groundBin.received));
-    double volumeAlreadyDownlinked = currentValue(binToChange.volume) - volumeNotYetDownlinked;
+    double remainingNotYetDownlinked = groundBin == null ? MAX :
+      Math.min(currentVolume,  currentValue(binToChange.received) - currentValue(groundBin.received));
+    double remainingAlreadyDownlinked = max(0.0, currentVolume - remainingNotYetDownlinked);
     double actualVolumeDeleted =
-      Math.min(volume, Math.min(currentVolume, limitToSentData ? volumeAlreadyDownlinked : MAX));
-    System.out.println("DeleteData(" + currentTime() + "): actualVolumeDeleted = " + actualVolumeDeleted);
+      Math.min(volume, Math.min(currentVolume, limitToSentData ? remainingAlreadyDownlinked : MAX));
 
     binToChange.remove(actualVolumeDeleted);
-
   }
-
 
 }
