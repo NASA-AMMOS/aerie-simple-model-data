@@ -226,25 +226,28 @@ public class Bucket {
 
   /**
    * Specify what resource data to collect for display
+   *
+   * @param namePrefix
    * @param registrar
    */
-  public void registerStates(Registrar registrar) {
-    registrar.real(name + ".desiredReceiveRate", assumeLinear(desiredReceiveRate));
-    registrar.real(name + ".desiredRemoveRate", assumeLinear(desiredRemoveRate));
-    registrar.real(name + ".desiredRate", assumeLinear(desiredRate));
-    registrar.real(name + ".actualRate", assumeLinear(actualRate));
-    registrar.real(name + ".desiredReceivedVolume", assumeLinear(desiredReceived));
-    registrar.real(name + ".desiredRemovedVolume", assumeLinear(desiredRemoved));
-    registrar.real(name + ".receivedVolume", assumeLinear(received));
-    registrar.real(name + ".removedVolume", assumeLinear(removed));
-    registrar.real(name + ".volume", assumeLinear(volume));
-    if (clampedVolume != null) registrar.real(name + ".clampedVolume", assumeLinear(clampedVolume));
-    if (correctedVolume != null) registrar.real(name + ".correctedVolume", assumeLinear(correctedVolume));
+  public void registerStates(String namePrefix, Registrar registrar) {
+    final String longerName = namePrefix + name;
+    registrar.real(longerName + ".desiredReceiveRate", assumeLinear(desiredReceiveRate));
+    registrar.real(longerName + ".desiredRemoveRate", assumeLinear(desiredRemoveRate));
+    registrar.real(longerName + ".desiredRate", assumeLinear(desiredRate));
+    registrar.real(longerName + ".actualRate", assumeLinear(actualRate));
+    registrar.real(longerName + ".desiredReceivedVolume", assumeLinear(desiredReceived));
+    registrar.real(longerName + ".desiredRemovedVolume", assumeLinear(desiredRemoved));
+    registrar.real(longerName + ".receivedVolume", assumeLinear(received));
+    registrar.real(longerName + ".removedVolume", assumeLinear(removed));
+    registrar.real(longerName + ".volume", assumeLinear(volume));
+    if (clampedVolume != null) registrar.real(longerName + ".clampedVolume", assumeLinear(clampedVolume));
+    if (correctedVolume != null) registrar.real(longerName + ".correctedVolume", assumeLinear(correctedVolume));
     if (!volume_ub.equals(max_bound)) {
-      registrar.real(name + ".maxVolume", assumeLinear(volume_ub));
+      registrar.real(longerName + ".maxVolume", assumeLinear(volume_ub));
     }
     for (Bucket child : this.children) {
-      child.registerStates(registrar);
+      child.registerStates(namePrefix, registrar);
     }
   }
 

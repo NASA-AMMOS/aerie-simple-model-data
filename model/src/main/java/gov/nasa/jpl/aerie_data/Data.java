@@ -144,9 +144,9 @@ public class Data {
    * Register bin and other resources with Aerie to record them in the simulation results and see them in the UI.
    * @param registrar the built-in Registrar object used to register resources
    */
-  public void registerStates(Registrar registrar) {
-    onboard.registerStates(registrar);
-    ground.registerStates(registrar);
+  public void registerStates(String namePrefix, Registrar registrar) {
+    onboard.registerStates(namePrefix, registrar);
+    ground.registerStates(namePrefix, registrar);
     registrar.real("volumeRequestedToDownlink", assumeLinear(volumeRequestedToDownlink));
     registrar.real("durationRequestedToDownlink", assumeLinear(durationRequestedToDownlink));
     registrar.real("playbackDataRate", assumeLinear(dataRate));
