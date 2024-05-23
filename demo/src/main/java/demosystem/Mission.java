@@ -44,7 +44,7 @@ public class Mission implements DataMissionModel {
     // The ground bins track how much data has been played back/downloaded from the spacecraft.
     // bin0 is higher priority than bin 1.
     // The parent bucket has a limit of 10Gb (by default from the Configuration).
-    this.data = new Data(Optional.of(asPolynomial(dataRate)), 1, asPolynomial(maxVolune));
+    this.data = new Data(Optional.of(asPolynomial(dataRate)), 2, asPolynomial(maxVolune));
     data.registerStates("", newRegistrar);
   }
 
