@@ -53,7 +53,7 @@ public class GenerateData {
   @ActivityType.EffectModel
   public void run(DataMissionModel model) {
     derivedValues();
-    var binToChange = model.getData().getOnboardBin(bin);
+    var binToChange = model.getData(module.name()).getOnboardBin(bin);
     System.out.println("GenerateData(" + Resources.currentTime() + "): rate = " + rate.get() + ", duration = " + duration.get());
     binToChange.receive(rate.get(), duration.get());
   }

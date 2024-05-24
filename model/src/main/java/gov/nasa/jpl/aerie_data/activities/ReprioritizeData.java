@@ -34,7 +34,7 @@ public class ReprioritizeData {
 
   @ActivityType.EffectModel
   public void run(DataMissionModel model) {
-    Data data = model.getData();
+    Data data = model.getData(module.name());
     var fromBin = data.getOnboardBin(bin);
     var toBin = data.getOnboardBin(newBin);
 

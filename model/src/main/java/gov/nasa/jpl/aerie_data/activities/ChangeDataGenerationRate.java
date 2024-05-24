@@ -34,7 +34,7 @@ public class ChangeDataGenerationRate {
    */
   @ActivityType.EffectModel
   public void run(DataMissionModel model) {
-    Data data = model.getData();
+    Data data = model.getData(module.name());
     if (rate == 0.0) return;
     var binToChange = data.getOnboardBin(bin);
 
