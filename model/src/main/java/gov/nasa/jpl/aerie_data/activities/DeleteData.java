@@ -4,12 +4,15 @@ import gov.nasa.jpl.aerie.merlin.framework.annotations.ActivityType;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.Export;
 import gov.nasa.jpl.aerie_data.Data;
 import gov.nasa.jpl.aerie_data.DataMissionModel;
+import gov.nasa.jpl.aerie_data.Module;
 
 import static gov.nasa.jpl.aerie.contrib.streamline.core.Resources.*;
 import static java.lang.Math.max;
 
 @ActivityType("DeleteData")
 public class DeleteData {
+  @Export.Parameter
+  public Module module = Module.LANDER;
   /**
    * The maximum volume to delete depending on {@link #limitToSentData} and the volume of the bin
    */

@@ -7,6 +7,7 @@ import gov.nasa.jpl.aerie.merlin.framework.annotations.ActivityType;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.Export;
 import gov.nasa.jpl.aerie_data.Data;
 import gov.nasa.jpl.aerie_data.DataMissionModel;
+import gov.nasa.jpl.aerie_data.Module;
 
 import static gov.nasa.jpl.aerie.contrib.streamline.core.MutableResource.set;
 import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomial.polynomial;
@@ -14,6 +15,8 @@ import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomi
 @ActivityType("ChangeDataGenerationRate")
 public class ChangeDataGenerationRate {
 
+  @Export.Parameter
+  public Module module = Module.LANDER;
   /**
    * The bin whose rate is changed
    */

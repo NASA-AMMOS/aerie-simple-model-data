@@ -86,18 +86,21 @@ public class Data {
    * using an externally defined data rate and storage limit (max volume) for the total onboard storage.
    * @param dataRate the data rate resource, specified external to the data model, such as by a telecom subsystem model
    * @param numBuckets the number of prioritized bins/categories of data
-   * @param maxVolume the onboard storage limit as a resource that is defined set external to the data model
+   * @param parentMaxVolume the onboard storage limit as a resource that is defined set external to the data model
    */
-  public Data(Optional<Resource<Polynomial>> dataRate, int numBuckets, Resource<Polynomial> maxVolume) {
+  public Data(Optional<Resource<Polynomial>> dataRate, int numBuckets, Resource<Polynomial> parentMaxVolume) {
+    this(dataRate, numBuckets, parentMaxVolume, constant(Double.MAX_VALUE));
+  }
+  public Data(Optional<Resource<Polynomial>> dataRate, int numBuckets, Resource<Polynomial> parentMaxVolume, Resource<Polynomial> childMaxVolume) {
 
     for (int i = 0; i < numBuckets; ++i) {
-      Bucket scBin = new Bucket("scBin" + i, true, Collections.emptyList());
+      Bucket scBin = new Bucket("scBin" + i, true, Collections.emptyList(), childMaxVolume);
       onboardBuckets.add(scBin);
       Bucket gBin = new Bucket("gndBin" + i, true, Collections.emptyList());
       groundBuckets.add(gBin);
     }
 
-    onboard = new Bucket("onboard", false, onboardBuckets, maxVolume); // 10Gb
+    onboard = new Bucket("onboard", false, onboardBuckets, parentMaxVolume); // 10Gb
 
     ground = new Bucket("ground", false, groundBuckets);
 

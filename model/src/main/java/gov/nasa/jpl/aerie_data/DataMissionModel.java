@@ -5,4 +5,5 @@ package gov.nasa.jpl.aerie_data;
  */
 public interface DataMissionModel {
     Data getData();
+    Data getData(String dataIdentifier);
 }

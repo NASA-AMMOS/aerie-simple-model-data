@@ -16,6 +16,6 @@ public class SetPlaybackDataRate {
   @ActivityType.EffectModel
   public void run(Mission model) {
     // change the data rate resource to the specified rate immediately
-    set(model.dataRate, rate);
+    set(model.landerDataRate, rate);
   }
 }

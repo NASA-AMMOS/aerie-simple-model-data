@@ -17,6 +17,6 @@ public class SetMaxVolume {
   @ActivityType.EffectModel
   public void run(Mission model) {
     // change the maxVolume resource to the specified volume immediately
-    set(model.maxVolune, volume);
+    set(model.landerMaxVolune, volume);
   }
 }

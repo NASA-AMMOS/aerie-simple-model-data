@@ -7,7 +7,9 @@ import gov.nasa.jpl.aerie.merlin.framework.annotations.ActivityType;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.Export;
 import gov.nasa.jpl.aerie.merlin.protocol.types.Duration;
 import gov.nasa.jpl.aerie.merlin.protocol.types.RealDynamics;
+import gov.nasa.jpl.aerie_data.Data;
 import gov.nasa.jpl.aerie_data.DataMissionModel;
+import gov.nasa.jpl.aerie_data.Module;
 
 import java.util.Optional;
 
@@ -18,6 +20,8 @@ import static gov.nasa.jpl.aerie.merlin.framework.ModelActions.waitUntil;
 
 @ActivityType("PlaybackData")
 public class PlaybackData {
+  @Export.Parameter
+  public Module module = Module.LANDER;
   /**
    * Desired volume of data to downlink.  May not be achieved if data is not present.
    */
@@ -28,7 +32,8 @@ public class PlaybackData {
 
   @ActivityType.EffectModel
   public void run(DataMissionModel model) {
-    var ground = model.getData().ground;
+    Data data = model.getData(module.name());
+    var ground = data.ground;
 
     if (volume.isPresent() && volume.get() == 0.0) return;
     if (duration.isPresent() && duration.get().isEqualTo(Duration.ZERO)) return;
@@ -39,23 +44,23 @@ public class PlaybackData {
 
     final var targetGroundReceivedValue = volume.isEmpty() ? Double.MAX_VALUE : currentValue(ground.received) + volume.get();
     if (volume.isPresent()) {
-      restore(model.getData().volumeRequestedToDownlink, volume.get());
+      restore(data.volumeRequestedToDownlink, volume.get());
     }
     if (duration.isPresent()) {
-      set(model.getData().durationRequestedToDownlink, Polynomial.polynomial(duration.get().in(Duration.SECONDS), -1));
+      set(data.durationRequestedToDownlink, Polynomial.polynomial(duration.get().in(Duration.SECONDS), -1));
     }
     waitUntil(Condition.and(
       volume.isEmpty() ? Condition.TRUE : isBetween(ground.received, targetGroundReceivedValue, targetGroundReceivedValue * 2),
-      duration.isEmpty() ? Condition.TRUE : isBetween(model.getData().durationRequestedToDownlink, -2.0, 0)));
+      duration.isEmpty() ? Condition.TRUE : isBetween(data.durationRequestedToDownlink, -2.0, 0)));
     if (volume.isPresent()) {
-      set(model.getData().volumeRequestedToDownlink, Polynomial.polynomial(0, 0));
+      set(data.volumeRequestedToDownlink, Polynomial.polynomial(0, 0));
     }
     if (duration.isPresent()) {
-      set(model.getData().durationRequestedToDownlink, Polynomial.polynomial(0, 0));
+      set(data.durationRequestedToDownlink, Polynomial.polynomial(0, 0));
     }
   }
 
-  private Condition isBetween(Resource<Polynomial> r, final double lower, final double upper) {
+  private static Condition isBetween(Resource<Polynomial> r, final double lower, final double upper) {
     return (positive, atEarliest, atLatest) -> {
       final var p = r.getDynamics().getOrThrow().data();
 

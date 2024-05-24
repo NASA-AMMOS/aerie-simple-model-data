@@ -6,11 +6,14 @@ import gov.nasa.jpl.aerie.merlin.framework.annotations.Export;
 import gov.nasa.jpl.aerie.merlin.protocol.types.Duration;
 import gov.nasa.jpl.aerie_data.Data;
 import gov.nasa.jpl.aerie_data.DataMissionModel;
+import gov.nasa.jpl.aerie_data.Module;
 
 import java.util.Optional;
 
 @ActivityType("GenerateData")
 public class GenerateData {
+  @Export.Parameter
+  public Module module = Module.LANDER;
   /**
    * The bin to generate data in
    */
