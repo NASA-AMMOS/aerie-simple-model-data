@@ -1,6 +1,7 @@
 package gov.nasa.jpl.aerie_data.activities;
 
 import gov.nasa.jpl.aerie.contrib.streamline.core.Resource;
+import gov.nasa.jpl.aerie.contrib.streamline.modeling.discrete.Discrete;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomial;
 import gov.nasa.jpl.aerie.merlin.framework.Condition;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.ActivityType;
@@ -29,6 +30,8 @@ public class PlaybackData {
   public Optional<Double> volume = Optional.empty(); // bits
   @Export.Parameter
   public Optional<Duration> duration = Optional.empty();
+  @Export.Parameter
+  public boolean deleteDownlinkedData = true;
 
   @ActivityType.EffectModel
   public void run(DataMissionModel model) {
@@ -49,6 +52,7 @@ public class PlaybackData {
     if (duration.isPresent()) {
       set(data.durationRequestedToDownlink, Polynomial.polynomial(duration.get().in(Duration.SECONDS), -1));
     }
+    set(data.autoDeleteDownlinkedData, Discrete.discrete(deleteDownlinkedData));
     waitUntil(Condition.and(
       volume.isEmpty() ? Condition.TRUE : isBetween(ground.received, targetGroundReceivedValue, targetGroundReceivedValue * 2),
       duration.isEmpty() ? Condition.TRUE : isBetween(data.durationRequestedToDownlink, -2.0, 0)));

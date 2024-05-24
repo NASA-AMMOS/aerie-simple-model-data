@@ -3,6 +3,7 @@ package gov.nasa.jpl.aerie_data;
 import gov.nasa.jpl.aerie.contrib.streamline.core.MutableResource;
 import gov.nasa.jpl.aerie.contrib.streamline.core.Resource;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.Registrar;
+import gov.nasa.jpl.aerie.contrib.streamline.modeling.discrete.Discrete;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.LinearBoundaryConsistencySolver;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.Polynomial;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.PolynomialResources;
@@ -13,6 +14,7 @@ import static gov.nasa.jpl.aerie.contrib.streamline.core.MutableResource.set;
 import static gov.nasa.jpl.aerie.contrib.streamline.core.Reactions.wheneverDynamicsChange;
 import static gov.nasa.jpl.aerie.contrib.streamline.core.Resources.*;
 import static gov.nasa.jpl.aerie.contrib.streamline.modeling.discrete.DiscreteResources.*;
+import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.PolynomialEffects.restore;
 import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.PolynomialResources.*;
 import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.PolynomialResources.min;
 import static gov.nasa.jpl.aerie.merlin.framework.ModelActions.spawn;
@@ -56,6 +58,8 @@ public class Data {
    * how much time is left before the goal has been met.
    */
   public MutableResource<Polynomial> durationRequestedToDownlink = polynomialResource(0.0);
+
+  public MutableResource<Discrete<Boolean>> autoDeleteDownlinkedData = discreteResource(true);
 
   /**
    * The storage bins/categories, which are children of {@link #onboard}.  Lower indices in the array are higher priority
@@ -129,6 +133,13 @@ public class Data {
       actualDownlinkRates.add(actualDownlinkRate);
       downlinkRateLeft = PolynomialResources.subtract(downlinkRateLeft, actualDownlinkRate);
       forward(eraseExpiry(actualDownlinkRate), (MutableResource<Polynomial>)gBin.desiredReceiveRate);
+      var cachedActualDownlinkRate = cache(actualDownlinkRate);
+      wheneverDynamicsChange(actualDownlinkRate, r -> {
+        if (currentValue(autoDeleteDownlinkedData).booleanValue()) {
+          restore((MutableResource<Polynomial>) scBin.desiredRemoveRate, r.getOrThrow().data().extract() - currentValue(cachedActualDownlinkRate));
+        }
+      });
+
     }
     wheneverDynamicsChange(ground.actualRate, r -> {
       if (currentValue(volumeRequestedToDownlink) > 0)
