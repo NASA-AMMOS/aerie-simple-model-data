@@ -150,9 +150,9 @@ public class Data {
   public void registerStates(String namePrefix, Registrar registrar) {
     onboard.registerStates(namePrefix, registrar);
     ground.registerStates(namePrefix, registrar);
-    registrar.real("volumeRequestedToDownlink", assumeLinear(volumeRequestedToDownlink));
-    registrar.real("durationRequestedToDownlink", assumeLinear(durationRequestedToDownlink));
-    registrar.real("playbackDataRate", assumeLinear(dataRate));
+    registrar.real(namePrefix + "volumeRequestedToDownlink", assumeLinear(volumeRequestedToDownlink));
+    registrar.real(namePrefix + "durationRequestedToDownlink", assumeLinear(durationRequestedToDownlink));
+    registrar.real(namePrefix + "playbackDataRate", assumeLinear(dataRate));
   }
 
 }

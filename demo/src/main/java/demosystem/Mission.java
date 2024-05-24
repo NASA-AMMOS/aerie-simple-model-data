@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
 
+import static gov.nasa.jpl.aerie.contrib.streamline.core.Resources.eraseExpiry;
 import static gov.nasa.jpl.aerie.contrib.streamline.core.Resources.forward;
 import static gov.nasa.jpl.aerie.contrib.streamline.modeling.discrete.DiscreteResources.discreteResource;
 import static gov.nasa.jpl.aerie.contrib.streamline.modeling.polynomial.PolynomialResources.*;
@@ -73,10 +74,10 @@ public class Mission implements DataMissionModel {
 
     this.landerDataRate = discreteResource(config.initialLanderDatarate()); // bps
     this.landerMaxVolune = discreteResource(config.initialLanderMaxVolume()); // bits
-    this.roverDataRate = discreteResource(config.initialLanderDatarate()); // bps
-    this.roverMaxVolune = discreteResource(config.initialLanderMaxVolume()); // bits
-    this.baseStationDataRate = discreteResource(config.initialLanderDatarate()); // bps
-    this.baseStationMaxVolune = discreteResource(config.initialLanderMaxVolume()); // bits
+    this.roverDataRate = discreteResource(config.roverDatarate()); // bps
+    this.roverMaxVolune = discreteResource(config.roverMaxVolume()); // bits
+    this.baseStationDataRate = discreteResource(config.baseStationDatarate()); // bps
+    this.baseStationMaxVolune = discreteResource(config.baseStationMaxVolume()); // bits
 
     // Two buckets/bins for the spacecraft and two for ground are created here by passing in 2 below.
     // The ground bins track how much data has been played back/downloaded from the spacecraft.
@@ -92,9 +93,9 @@ public class Mission implements DataMissionModel {
     baseStationData.registerStates("baseStation.", newRegistrar);
 
     // Transfer of rover data to the base station is done via Playback
-    forward(roverData.ground.actualRate, (MutableResource<Polynomial>) baseStationData.getOnboardBin(0).desiredReceiveRate);
+    forward(eraseExpiry(roverData.ground.actualRate), (MutableResource<Polynomial>) baseStationData.getOnboardBin(0).desiredReceiveRate);
     // Transfer of base station data to the lander is done via Playback
-    forward(baseStationData.ground.actualRate, (MutableResource<Polynomial>) landerData.getOnboardBin(0).desiredReceiveRate);
+    forward(eraseExpiry(baseStationData.ground.actualRate), (MutableResource<Polynomial>) landerData.getOnboardBin(0).desiredReceiveRate);
   }
 
   @Override
