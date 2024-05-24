@@ -1,0 +1,110 @@
+{
+  "name": "m3p02024-05-24T11-48-42",
+  "start_time": "2024-05-24T00:00:00+00:00",
+  "end_time": "2024-05-25T00:00:00+00:00",
+  "id": 8,
+  "model_id": 5,
+  "sim_id": 8,
+  "activities": [
+    {
+      "type": "GenerateData",
+      "metadata": {},
+      "name": "GenerateData",
+      "arguments": {
+        "rate": {
+          "value": 0,
+          "present": false
+        },
+        "module": "ROVER",
+        "volume": {
+          "value": 400000,
+          "present": true
+        },
+        "duration": {
+          "value": 3600000000,
+          "present": true
+        }
+      },
+      "anchor_id": null,
+      "anchored_to_start": true,
+      "start_offset": "3:57:21.758000",
+      "id": 10
+    },
+    {
+      "type": "GenerateData",
+      "metadata": {},
+      "name": "GenerateData",
+      "arguments": {
+        "bin": 1,
+        "rate": {
+          "value": 0,
+          "present": false
+        },
+        "module": "ROVER",
+        "volume": {
+          "value": 600000,
+          "present": true
+        },
+        "duration": {
+          "value": 10800000000,
+          "present": true
+        }
+      },
+      "anchor_id": null,
+      "anchored_to_start": true,
+      "start_offset": "4:35:20.439000",
+      "id": 14
+    },
+    {
+      "type": "PlaybackData",
+      "metadata": {},
+      "name": "PlaybackData",
+      "arguments": {
+        "module": "ROVER",
+        "volume": {
+          "value": 1000000,
+          "present": true
+        },
+        "duration": {
+          "value": 3600000000,
+          "present": false
+        }
+      },
+      "anchor_id": null,
+      "anchored_to_start": true,
+      "start_offset": "7:59:28.351000",
+      "id": 12
+    },
+    {
+      "type": "PlaybackData",
+      "metadata": {},
+      "name": "PlaybackData",
+      "arguments": {
+        "module": "BASESTATION",
+        "volume": {
+          "value": 1000000,
+          "present": true
+        }
+      },
+      "anchor_id": null,
+      "anchored_to_start": true,
+      "start_offset": "12:20:34.285000",
+      "id": 11
+    },
+    {
+      "type": "PlaybackData",
+      "metadata": {},
+      "name": "PlaybackData",
+      "arguments": {
+        "volume": {
+          "value": 1000000,
+          "present": true
+        }
+      },
+      "anchor_id": null,
+      "anchored_to_start": true,
+      "start_offset": "16:06:51.428000",
+      "id": 13
+    }
+  ]
+}
